@@ -1,0 +1,66 @@
+<div class="auth-background">
+  <div class="container">
+    <app-auth-head title="Sign up" />
+    <form class="form" [formGroup]="form">
+      <mat-form-field class="input">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" />
+        @if (form.get('firstName')?.hasError('required') &&
+        form.get('firstName')?.touched) {
+        <mat-error>First name is required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="input">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" />
+        @if (form.get('lastName')?.hasError('required') &&
+        form.get('lastName')?.touched) {
+        <mat-error>Last name is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="input">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          formControlName="email"
+          placeholder="Ex. john@gmail.com"
+        />
+        @if(form.get('email')?.hasError('required')){
+        <mat-error> Email is required </mat-error>
+        } @if (form.get('email')?.hasError('email') ||
+        form.get('email')?.hasError('pattern')) {
+        <mat-error> Please enter a valid email address </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="input">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        @if (form.get('password')?.hasError('required') &&
+        form.get('password')?.touched) {
+        <mat-error>Password is required</mat-error>
+        } @if (form.get('password')?.hasError('minlength') ) {
+        <mat-error> Password should be 6 characters or longer </mat-error>
+        }
+      </mat-form-field>
+    </form>
+
+    <button mat-flat-button (click)="submit()">Sign Up</button>
+
+    <div class="more-action">
+      Already have an account? <a [routerLink]="['/']">Login </a>
+    </div>
+
+    @if(errorMessage){
+    <div class="alert-container">
+      <app-alert type="error" [message]="errorMessage" />
+    </div>
+    } @if(successMessagge){
+    <div class="alert-container">
+      <app-alert type="success" [message]="successMessagge" />
+    </div>
+    }
+  </div>
+</div>
