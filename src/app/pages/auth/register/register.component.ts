@@ -2,8 +2,6 @@ import { Component, OnDestroy, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  FormGroupDirective,
-  NgForm,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -58,7 +56,6 @@ export class RegisterComponent implements OnDestroy {
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      console.log('Form is invalid. Cannot submit.');
       return;
     }
 
