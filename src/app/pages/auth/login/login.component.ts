@@ -86,7 +86,7 @@ export class LoginComponent implements OnDestroy {
         if (res) {
           this.successMessagge = 'login successful';
           setTimeout(() => {
-            this.router.navigate(['/homePage']);
+            this.router.navigate(['/home']);
           }, 2000);
         }
       });
