@@ -1,47 +1,46 @@
 import { Component, OnDestroy, inject } from '@angular/core';
+import { MatInputModule } from '@angular/material/input';
+
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
-import { Register } from '../../../core/interfaces/auth.interface';
-import { Subject, catchError, takeUntil, throwError } from 'rxjs';
+
 import { AuthHeadComponent } from '../../../shared/auth-head/auth-head.component';
 import { AlertComponent } from '../../../shared/alert/alert.component';
-import { NgIf } from '@angular/common';
+import { Login } from '../../../core/interfaces/auth.interface';
+import { Subject, catchError, takeUntil, throwError } from 'rxjs';
 import { AuthFacade } from '../../../facade';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-login',
   standalone: true,
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss', '../auth.style.scss'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss', '../auth.style.scss'],
   imports: [
     AuthHeadComponent,
+
     MatInputModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatButtonModule,
     RouterLink,
     AlertComponent,
-    NgIf,
   ],
 })
-export class RegisterComponent implements OnDestroy {
+export class LoginComponent implements OnDestroy {
   authFacade = inject(AuthFacade);
+  router = inject(Router);
   sub$ = new Subject();
   errorMessage: string | null = null;
   successMessagge: string | null = null;
-  router = inject(Router);
 
   form = new FormGroup({
-    firstName: new FormControl<string>('', Validators.required),
-    lastName: new FormControl<string>('', Validators.required),
     email: new FormControl<string>('', [
       Validators.required,
       Validators.email,
@@ -58,45 +57,36 @@ export class RegisterComponent implements OnDestroy {
       this.form.markAllAsTouched();
       return;
     }
-
     this.errorMessage = null;
     this.successMessagge = null;
 
-    const { firstName, lastName, email, password } = this.form.value as {
-      firstName: string;
-      lastName: string;
+    const { email, password } = this.form.value as {
       email: string;
       password: string;
     };
 
-    firstName.trim();
-    lastName.trim();
     email.trim();
     password.trim();
 
-    const payload: Register = {
-      firstName,
-      lastName,
+    const payload: Login = {
       email,
       password,
     };
+
     this.authFacade
-      .register(payload)
+      .login(payload)
       .pipe(
         catchError(({ error }) => {
           this.errorMessage = error.message;
-          setTimeout(() => {
-            this.errorMessage = null;
-          }, 5000);
           return throwError(() => error.message);
         })
       )
       .pipe(takeUntil(this.sub$))
       .subscribe((res) => {
         if (res) {
-          this.successMessagge = 'you are registered';
+          this.successMessagge = 'login successful';
           setTimeout(() => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/home']);
           }, 2000);
         }
       });
