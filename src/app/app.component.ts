@@ -11,4 +11,5 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title: string = 'task-manager-front';
   public name: string = 'tamta';
+  public name2: string = 'gela';
 }
