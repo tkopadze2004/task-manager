@@ -1,0 +1,44 @@
+.project-container {
+  display: flex;
+  gap: 40px;
+
+  h1 {
+    color: rgb(62, 61, 61);
+  }
+
+  &__left {
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      mat-form-field {
+        width: 400px;
+      }
+    }
+
+    button {
+      width: 400px;
+      height: 50px;
+      border-radius: 3px;
+    }
+  }
+
+  &__right {
+    background-color: rgba(50, 119, 216, 0.19);
+    width: 440px;
+    margin-top: 30px;
+
+    img {
+      width: 330px;
+      margin: 70px 60px;
+    }
+  }
+  .close {
+    button {
+      position: absolute;
+      top: 70px;
+      right: 200px;
+    }
+  }
+}
