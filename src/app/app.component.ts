@@ -9,5 +9,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title: string = 'task-manager-front';
+  title = 'task-manager-front';
 }
