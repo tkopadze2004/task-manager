@@ -12,4 +12,5 @@ export class AppComponent {
   title: string = 'task-manager-front';
   public name: string = 'tamta';
   public name2: string = 'gela';
+  public name3: string = 'gela';
 }
