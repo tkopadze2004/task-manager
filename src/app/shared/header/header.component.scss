@@ -1,0 +1,136 @@
+header {
+  height: 40px;
+  background-color: whitesmoke;
+  border-bottom: 1px solid rgb(192, 189, 189);
+  padding: 7px 180px 9px;
+
+  .side {
+    display: flex;
+    justify-content: space-between;
+
+    &__right,
+    &__left {
+      display: flex;
+      align-items: center;
+    }
+
+    &__right {
+      &__logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        img {
+          width: 36px;
+        }
+        &--brand {
+          margin-top: 5px;
+          text-transform: capitalize;
+          font-weight: 450;
+          font-size: 19px;
+          color: rgb(42, 47, 148);
+          font-family: "Rubik", sans-serif;
+        }
+      }
+    }
+
+    &__left {
+      gap: 35px;
+      &--user {
+        img {
+          width: 23px;
+          cursor: pointer;
+        }
+      }
+      &--projects {
+        a {
+          display: flex;
+          align-items: center;
+          gap: 1px;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 24px;
+          padding: 1px 10px;
+          font-family: "Lateef", serif;
+          color: rgb(83, 78, 78);
+          img {
+            margin-top: 4px;
+          }
+        }
+        :focus,
+        :hover {
+          background-color: rgb(230, 228, 228);
+          border-radius: 4px;
+        }
+      }
+
+      &--createProject {
+        button {
+          width: auto;
+          border-radius: 2;
+          background-color: #2c3c7c;
+          color: rgb(243, 242, 242);
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+.menu {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 290px;
+  max-height: 400px;
+  margin-top: 12px;
+  overflow-y: auto;
+  position: relative;
+
+  &__title {
+    position: sticky;
+    height: 35px;
+    top: 0;
+    background-color: #ffffff;
+    font-size: 16px;
+    color: #8b8b8b;
+    font-family: "Georgia", serif;
+    z-index: 1;
+    display: block;
+    padding: 10px 0;
+    h4 {
+      margin: 10px 0 0 15px;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      background-color: #f8f8f8;
+      margin: 14px 30px;
+      padding: 15px 20px;
+      border-radius: 10px;
+      transition: background-color 0.6s ease, transform 0.6s ease;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-family: "Rubik", sans-serif;
+      font-size: 17px;
+      color: #484848;
+
+      &:hover {
+        background-color: #e0f7fa;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    h3 {
+      color: #888;
+      text-align: center;
+      font-family: "Verdana", sans-serif;
+      margin-bottom: 20px;
+    }
+  }
+}

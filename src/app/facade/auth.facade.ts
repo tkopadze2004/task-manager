@@ -27,6 +27,10 @@ export class AuthFacade {
     return this.storageService.getItem('user');
   }
 
+  get isAuthenticated(): boolean {
+    return !!this.accessToken;
+  }
+
   register(payload: Register): Observable<AuthResponse> {
     return this.authservice.register(payload).pipe(
       tap((res) => {
