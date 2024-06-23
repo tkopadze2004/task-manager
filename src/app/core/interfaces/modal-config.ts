@@ -1,5 +1,5 @@
 export interface ModalConfig {
-  data?: { [key: string]: any };
+  data?: { [key: string]: unknown };
   width: number;
   height: number;
   backdrob: boolean;

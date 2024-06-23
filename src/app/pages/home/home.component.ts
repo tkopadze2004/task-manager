@@ -7,6 +7,7 @@ import { CreateProjectComponent } from '../project/create-project/create-project
 import { MatButtonModule } from '@angular/material/button';
 import { ProjectFacade } from '../../facade';
 import { ModalService } from '../../core/modal/modal.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ import { ModalService } from '../../core/modal/modal.service';
     ProjectCardComponent,
     CreateProjectComponent,
     MatButtonModule,
+    RouterLink,
   ],
 })
 export class HomeComponent {

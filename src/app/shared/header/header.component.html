@@ -25,12 +25,7 @@
             </div>
             <ul>
               @for(project of projects$ | async ;track project.id){
-              <li
-                routerLink="/project"
-                [queryParams]="{
-                  project: [project.id]
-                }"
-              >
+              <li [routerLink]="['/home/mainContent/myProject', project.id]">
                 {{ project.name }}
               </li>
               }@empty {

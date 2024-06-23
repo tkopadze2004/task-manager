@@ -43,7 +43,6 @@ export class AuthFacade {
   login(payload: Login): Observable<AuthResponse> {
     return this.authservice.login(payload).pipe(
       tap((res) => {
-        console.log(res);
         const { accessToken, refreshToken } = res.token;
         const user = res.user;
         this.storageService.setItem('accessToken', accessToken);

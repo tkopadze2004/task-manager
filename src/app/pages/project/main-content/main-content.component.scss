@@ -1,0 +1,51 @@
+.main-content {
+  display: flex;
+  justify-content: flex-start;
+
+  &__left {
+    display: flex;
+    margin: 80px 20px 0 80px;
+
+    &--menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      img {
+        width: 16px;
+      }
+      li {
+        border-radius: 8px;
+        padding: 8px 24px;
+        width: 145px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+      }
+      li:hover,
+      .active {
+        background: rgba(135, 162, 190, 0.519);
+        color: black;
+      }
+
+      &__name {
+        font-weight: 500;
+        line-height: 175%;
+      }
+    }
+  }
+
+  &__right {
+    width: auto;
+    margin: 64px 0 0 40px;
+  }
+
+  .line {
+    margin: 30px 100px 0 0;
+    min-height: 600px;
+    border-right: 1px solid rgb(181, 180, 180);
+  }
+}
