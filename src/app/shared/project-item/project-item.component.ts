@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BoardItemComponent } from '../board-item/board-item.component';
 import { ModalService } from '../../core/modal/modal.service';
-import { CreateProjectComponent } from '../../pages/project/create-project/create-project.component';
+import { CreateProjectComponent } from '../../pages/project/create-edit-project/create-edit-project.component';
 import { Project } from '../../core/interfaces/project';
 import { Router } from '@angular/router';
 import { NgStyle } from '@angular/common';
@@ -23,7 +23,7 @@ export class ProjectItemComponent implements OnDestroy {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
   private sub$ = new Subject();
-   @Input() project!: Project;
+  @Input() project!: Project;
 
   public get firstLetter(): string {
     return this.project?.name ? this.project.name[0].toUpperCase() : '';

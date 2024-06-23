@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { ProjectFacade } from '../../facade';
 import { ModalService } from '../../core/modal/modal.service';
-import { CreateProjectComponent } from '../../pages/project/create-project/create-project.component';
+import { CreateProjectComponent } from '../../pages/project/create-edit-project/create-edit-project.component';
 import { tap } from 'rxjs';
 
 @Component({

@@ -3,7 +3,7 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { AsyncPipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
-import { CreateProjectComponent } from '../project/create-project/create-project.component';
+import { CreateProjectComponent } from '../project/create-edit-project/create-edit-project.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ProjectFacade } from '../../facade';
 import { ModalService } from '../../core/modal/modal.service';
