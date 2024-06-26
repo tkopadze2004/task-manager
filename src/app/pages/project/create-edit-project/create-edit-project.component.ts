@@ -1,5 +1,4 @@
 import { Component, OnDestroy, inject } from '@angular/core';
-import { ProjectService } from '../../../service/project.service';
 import {
   FormControl,
   FormGroup,
@@ -9,14 +8,15 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { Subject, catchError, throwError } from 'rxjs';
+import { Subject, catchError, takeUntil, throwError } from 'rxjs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
-import { NgStyle } from '@angular/common';
+import { AsyncPipe, NgStyle } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ModalRef } from '../../../core/modal/modal.ref';
 import { ProjectFacade } from '../../../facade';
+import { Project } from '../../../core/interfaces/project';
 
 @Component({
   selector: 'app-create-project',
@@ -30,6 +30,7 @@ import { ProjectFacade } from '../../../facade';
     MatSelectModule,
     NgStyle,
     MatIconModule,
+    AsyncPipe,
   ],
   templateUrl: './create-project.component.html',
   styleUrl: './create-project.component.scss',
@@ -42,14 +43,19 @@ export class CreateProjectComponent implements OnDestroy {
     { value: '#d7dfe3', viewValue: 'Grey' },
   ];
 
-  projectService = inject(ProjectService);
   projectFacade = inject(ProjectFacade);
-
   snackBar = inject(MatSnackBar);
   modalRef = inject(ModalRef);
   sub$ = new Subject();
 
+  ngOnInit(): void {
+    if (this.modalRef.data) {
+      this.form.patchValue(this.modalRef.data.project);
+    }
+  }
+
   form = new FormGroup({
+    id: new FormControl(),
     name: new FormControl('', Validators.required),
     abbreviation: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
@@ -62,7 +68,8 @@ export class CreateProjectComponent implements OnDestroy {
       return;
     }
 
-    const { name, abbreviation, description, color } = this.form.value as {
+    const { id, name, abbreviation, description, color } = this.form.value as {
+      id: number;
       name: string;
       abbreviation: string;
       description: string;
@@ -81,31 +88,58 @@ export class CreateProjectComponent implements OnDestroy {
       color,
     };
 
-    this.projectService
-      .createProject(payload)
-      .pipe(
-        catchError(({ error }) => {
-          this.openSnackBar(error.message, 'Close');
-          return throwError(() => error.message);
-        })
-      )
-      .subscribe(() => {
-        this.openSnackBar('Project created successfully!', 'Close');
-        this.form.reset();
-        this.projectFacade.loadProjects();
-      });
+    if (id) {
+      this.updateProject(id, payload);
+    } else {
+      this.projectFacade
+        .createProject(payload)
+        .pipe(
+          catchError(({ error }) => {
+            this.openSnackBar(error.message, 'Close');
+            return throwError(() => error.message);
+          })
+        )
+        .pipe(takeUntil(this.sub$))
+        .subscribe(() => {
+          this.openSnackBar('Project created successfully!', 'Close');
+          this.form.reset();
+          this.projectFacade.loadProjects();
+        });
+    }
+  }
+  private updateProject(id: number, payload: Project) {
+    if (!this.modalRef.data.project) {
+      console.error('Project object is not available');
+      return;
+    } else
+      this.projectFacade
+        .editProjectById(id, payload)
+        .pipe(
+          catchError(({ error }) => {
+            this.openSnackBar(error.message, 'Close');
+            return throwError(() => error.message);
+          })
+        )
+        .pipe(takeUntil(this.sub$))
+        .subscribe(() => {
+          this.openSnackBar('Project updated successfully!', 'Close');
+          this.form.reset();
+          this.projectFacade.loadProjectById(id);
+          this.projectFacade.loadProjects();
+          this.modalRef.close();
+        });
   }
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 9000,
+      duration: 5000,
     });
   }
 
   close() {
     this.modalRef.close();
   }
-  
+
   ngOnDestroy(): void {
     this.sub$.next(null);
     this.sub$.complete();

@@ -14,4 +14,16 @@ export class ProjectService extends ApiService {
   createProject(project: Project): Observable<Project> {
     return this.post<Project>('project', project);
   }
+
+  getProjectById(id: number): Observable<Project> {
+    return this.get<Project>(`project/${id}`);
+  }
+
+  editProjectById(id: number, project: Project): Observable<Project> {
+    return this.put<Project>(`project/${id}`, project);
+  }
+
+  deteleProjectById(id:number):Observable<Project> {
+    return this.delete<Project>(`project/${id}`)
+  }
 }

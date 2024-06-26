@@ -1,0 +1,38 @@
+.project-item {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #051e4937;
+  width: 900px;
+
+  &__left {
+    display: flex;
+    &--name {
+      font-size: 26px;
+      color: rgba(42, 41, 41, 0.838);
+      font-weight: 500;
+      margin: 5px 0 0 10px;
+    }
+    &--icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      font-weight: 500;
+      color: #ffffff;
+      margin-right: 5px;
+    }
+    &--description {
+      margin: 6px 0 28px;
+      font-size: 13px;
+    }
+  }
+  &__right {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 30px;
+  }
+}

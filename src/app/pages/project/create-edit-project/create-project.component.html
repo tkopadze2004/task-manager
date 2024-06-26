@@ -1,6 +1,6 @@
 <div class="project-container">
   <div class="project-container__left">
-    <h1>Let's build a Project</h1>
+    <h1>{{ form.get("id")?.value ? "Edit Project" : "Create Project" }}</h1>
     <form [formGroup]="form">
       <mat-form-field>
         <mat-label>Project Name</mat-label>
@@ -20,7 +20,10 @@
 
       <mat-form-field>
         <mat-label>Project description</mat-label>
-        <textarea matInput formControlName="description">description</textarea>
+        <textarea matInput formControlName="description">
+         description
+         </textarea
+        >
         <input type="text" matInput />
         @if(form.get('description')?.hasError('required')){
         <mat-error> description is required </mat-error>
@@ -45,7 +48,9 @@
         }
       </mat-form-field>
     </form>
-    <button mat-flat-button (click)="createProject()">Create</button>
+    <button mat-flat-button (click)="createProject()">
+      {{ form.get("id")?.value ? "Update" : "Create" }}
+    </button>
   </div>
 
   <div class="project-container__right">
