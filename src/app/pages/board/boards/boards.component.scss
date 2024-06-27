@@ -1,0 +1,61 @@
+.boards-container {
+  &__header {
+    border-bottom: 1px solid #051e4937;
+    width: 900px;
+    text-transform: capitalize;
+    display: flex;
+    gap: 13px;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 25px;
+    &--title {
+      font-size: 25px;
+      color: rgba(42, 41, 41, 0.838);
+      font-weight: 500;
+    }
+    img {
+      width: 22px;
+    }
+  }
+}
+.board-item {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 45px;
+  margin-top: 65px;
+}
+
+::ng-deep.custom-tooltip {
+  --mdc-plain-tooltip-container-color: none;
+  --mdc-plain-tooltip-supporting-text-color: rgba(136, 179, 221, 0.782);
+  --mdc-plain-tooltip-supporting-text-size: 12px;
+}
+::ng-deep .custom-tooltip::after {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 44%;
+  margin-top: 10px;
+  border: 4px solid transparent;
+  border-bottom-color: rgba(135, 162, 190, 0.942);
+}
+.add-board {
+  display: flex;
+  flex-direction: row;
+  gap: 9px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 220px;
+  height: 120px;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.add-board:hover {
+  border-radius: 5px;
+  outline: 1px solid rgba(0, 0, 0, 0.5);
+}
