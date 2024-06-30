@@ -47,14 +47,24 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-.create-project {
-  background-color: rgb(238, 235, 235);
+
+.create-item {
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
+.projects {
+  background: rgb(238, 235, 235);
+}
+.board {
+  border-radius: 5px;
+  background-color: hwb(0 100% 0%);
+}
 .dark-overlay {
   background-color: rgba(0, 0, 0, 0.734);
+}
+
+.overlay {
+  background-color: none;
 }
