@@ -1,0 +1,64 @@
+<div class="project-container">
+  <div class="project-container__left">
+    <h1>{{ form.get("id")?.value ? "Edit Project" : "Create Project" }}</h1>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Project Name</mat-label>
+        <input type="text" matInput formControlName="name" />
+        @if(form.get('name')?.hasError('required')){
+        <mat-error> Project name is required </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Project abbreviation</mat-label>
+        <input type="text" matInput formControlName="abbreviation" />
+        @if(form.get('abbreviation')?.hasError('required')){
+        <mat-error> Abbreviation is required </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Project description</mat-label>
+        <textarea matInput formControlName="description">
+         description
+         </textarea
+        >
+        <input type="text" matInput />
+        @if(form.get('description')?.hasError('required')){
+        <mat-error> description is required </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Project color</mat-label>
+        <mat-select formControlName="color" placeholder="Select a color">
+          @for(color of colorOptions; track color){
+          <mat-option
+            [value]="color.value"
+            [style.background-color]="color.value"
+            [ngStyle]="{ 'margin-top': '3px' }"
+          >
+            {{ color.viewValue }}
+          </mat-option>
+          }
+        </mat-select>
+        @if(form.get('description')?.hasError('required')){
+        <mat-error> color is required </mat-error>
+        }
+      </mat-form-field>
+    </form>
+    <button mat-flat-button (click)="createProject()">
+      {{ form.get("id")?.value ? "Update" : "Create" }}
+    </button>
+  </div>
+
+  <div class="project-container__right">
+    <img src="/images/task.png" />
+  </div>
+  <div class="close">
+    <button mat-icon-button (click)="close()" class="close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

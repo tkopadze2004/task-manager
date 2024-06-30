@@ -1,0 +1,20 @@
+<div class="project-item">
+  <div class="project-item__left">
+    <div>
+      <div
+        class="project-item__left--icon"
+        [ngStyle]="{ background: project.color }"
+      >
+        {{ firstLetter }}
+      </div>
+      <div class="project-item__left--description">
+        {{ project.description }}
+      </div>
+    </div>
+    <div class="project-item__left--name">{{ project.name }}</div>
+  </div>
+  <div class="project-item__right">
+    <button mat-raised-button (click)="edit()">Edit</button>
+    <button mat-raised-button (click)="delete(project.id!)">Delete</button>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="main-content">
+  <div class="main-content__left">
+    <ul class="main-content__left--menu">
+      @if(projectId$ | async ;as id){
+      <li
+        [routerLink]="['/home/mainContent/myProject', id]"
+        routerLinkActive="active"
+      >
+        <div class="side-menu__name">
+          <img src="/images/project.png" />
+        </div>
+        <div class="side-menu__name">Project</div>
+      </li>
+      }
+      <li [routerLink]="['/home/mainContent/boards']" routerLinkActive="active">
+        <div
+          class="side-menu__name"
+          routerLink="home/mainContent/myProject"
+          routerLinkActive="active"
+        >
+          <img src="/images/boards.png" />
+        </div>
+        <div class="side-menu__name">Boards</div>
+      </li>
+      <li routerLink="/mainContent/users" routerLinkActive="active">
+        <div class="side-menu__name">
+          <img src="/images/users.svg" />
+        </div>
+        <div class="side-menu__name">Users</div>
+      </li>
+    </ul>
+  </div>
+  <div class="line"></div>
+
+  <div class="main-content__right">
+    <router-outlet />
+  </div>
+</div>

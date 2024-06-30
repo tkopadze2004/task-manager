@@ -4,7 +4,6 @@ import {
   AuthResponse,
   Login,
   Register,
-  Token,
 } from '../core/interfaces/auth.interface';
 import { Observable } from 'rxjs';
 
@@ -12,5 +11,12 @@ import { Observable } from 'rxjs';
 export class authService extends ApiService {
   register(payload: Register): Observable<AuthResponse> {
     return this.post<AuthResponse>('auth/signup', payload);
+  }
+  login(payload: Login): Observable<AuthResponse> {
+    return this.post<AuthResponse>('auth/login', payload);
+  }
+
+  token(refreshToken: string): Observable<AuthResponse> {
+    return this.post<AuthResponse>('auth/token', { refreshToken });
   }
 }

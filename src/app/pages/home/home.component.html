@@ -1,0 +1,25 @@
+<div class="menu">
+  <div class="menu__your-Projects">
+    your projects :
+    <div class="line"></div>
+  </div>
+  <div>
+    <ul class="menu__project-container">
+      <ng-container>
+        @for(project of projects$ | async; track project.id){
+        <li>
+          <app-project-card
+          [name]="project.name"
+          [color]="project.color"
+          [routerLink]="['/home/mainContent/myProject', project.id]"
+        ></app-project-card>
+        </li>
+        } @empty {
+        <span class="menu__project-container--empty-state">
+          There are no projects, let's create from
+          <a (click)="createProject()">here</a> </span
+        >}
+      </ng-container>
+    </ul>
+  </div>
+</div>

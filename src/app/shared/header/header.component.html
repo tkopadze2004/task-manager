@@ -1,0 +1,44 @@
+<header>
+  <div class="side">
+    <div class="side__right">
+      <div class="side__right__logo">
+        <img src="/images/task-management.png" routerLink="/home" />
+        <div class="side__right__logo--brand">Task Manager</div>
+      </div>
+    </div>
+    <div class="side__left">
+      <div class="side__left--createProject">
+        <button mat-flat-button (click)="createProject()">
+          create project
+        </button>
+      </div>
+
+      <div class="side__left--projects">
+        <a tabindex="0" [cdkMenuTriggerFor]="menu">
+          <span>projects</span>
+          <img src="/images/arrow.svg" />
+        </a>
+        <ng-template #menu>
+          <div class="menu">
+            <div class="menu__title">
+              <h4>your projects</h4>
+            </div>
+            <ul>
+              @for(project of projects$ | async ;track project.id){
+              <li [routerLink]="['/home/mainContent/myProject', project.id]">
+                {{ project.name }}
+              </li>
+              }@empty {
+              <h3>No project</h3>
+              }
+            </ul>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="side__left--user">
+        <img src="/images/menu.png" />
+      </div>
+    </div>
+  </div>
+</header>
