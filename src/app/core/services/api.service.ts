@@ -28,15 +28,13 @@ export class ApiService {
     return this.http.put<T>(`${this.apiUrl}${path}`, body);
   }
 
-  delete<T>(path: string, params?: any, headersObject?: any): Observable<T> {
-    const httpParams = new HttpParams({
-      fromObject: params,
-    });
+  delete<T>(path: string, headersObject?: any): Observable<T> {
+
     const headers = headersObject ? new HttpHeaders(headersObject) : {};
+    console.log(headers);
 
     return this.http.delete<T>(`${this.apiUrl}${path}`, {
       headers,
-      params: httpParams,
     });
   }
 }

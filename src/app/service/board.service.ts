@@ -23,7 +23,8 @@ export class BoardService extends ApiService {
     return this.get<Board>(`board/${boardId}`, { project: projectId });
   }
 
-  public deleteBoard(projectId: number, boardId: number): Observable<Board> {
-    return this.delete<Board>(`board/${boardId}`, { projectId });
+  public deleteBoard(boardId: number, projectId: number): Observable<any> {
+    const headers = { project: projectId.toString() };
+    return this.delete(`board/${boardId}`, headers);
   }
 }

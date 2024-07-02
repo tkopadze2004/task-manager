@@ -6,10 +6,7 @@
     <div class="boards-container__header--title">Your project boards</div>
   </div>
   <div class="board-item">
-    <div class="add-board" (click)="createBoard()">
-      <img src="/images/plus-sign.png" />
-      <span>Create new board </span>
-    </div>
+
     @for(board of boards$|async ; track board.id){
     <app-board-item
       [name]="board.name"
@@ -21,6 +18,10 @@
       >
     </app-board-item>
     }
+    <div class="add-board" (click)="createBoard()">
+      <img src="/images/plus-sign.png" />
+      <span>Create new board </span>
+    </div>
   </div>
 
 

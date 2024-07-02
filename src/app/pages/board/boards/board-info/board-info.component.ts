@@ -32,13 +32,12 @@ export class BoardInfoComponent {
     })
   );
 
-  delete(projectId: number, boardId: number) {
-    this.boardFacade.deleteBoard(projectId, boardId).subscribe(() => {
+  delete(boardId: number, projectId: number) {
+    this.boardFacade.deleteBoard(boardId, projectId).subscribe(() => {
       this.openSnackBar('Project deleted successfully!', 'Close');
-
       this.boardFacade.loadBoards(projectId);
       setTimeout(() => {
-        this.router.navigate(['/mainContent']);
+        this.router.navigate(['/home/mainContent/boards', this.projectId]);
       }, 3000);
     });
   }
