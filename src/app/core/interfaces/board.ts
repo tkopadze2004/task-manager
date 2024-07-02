@@ -29,3 +29,18 @@ export interface BoardColumn {
   updatedAt: Date;
   deletedAt: Date;
 }
+
+export interface Boardspayload {
+  name: string;
+  description: string;
+  position?: number;
+  columns?: ColumnsPayload[];
+}
+
+export interface ColumnsPayload {
+  name?: string;
+  description?: string;
+  position?: number;
+  boardId?: number;
+  taskStatus?: TaskStatus;
+}

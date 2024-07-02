@@ -1,11 +1,13 @@
 import { Component, inject } from '@angular/core';
 import {
   ActivatedRoute,
+  NavigationEnd,
+  Router,
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -16,14 +18,14 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent {
-  public selectedProjectId!: number;
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
-  public projectId$: Observable<null | number> | undefined =
-    this.route.firstChild?.paramMap.pipe(
-      map((params) => {
-        const projectId: null | number = +params.get('projectId')!;
-        return projectId;
-      })
-    );
+  public projectId$: Observable<null | number> = this.router.events.pipe(
+    filter((event) => event instanceof NavigationEnd),
+    startWith(null),
+    map(() => {
+      return this.route.snapshot.firstChild?.params['projectId'];
+    })
+  );
 }

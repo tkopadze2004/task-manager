@@ -6,7 +6,7 @@ import { ProjectFacade } from '../../../../facade';
 import { Project } from '../../../../core/interfaces/project';
 import { ProjectItemComponent } from '../../../../shared/project-item/project-item.component';
 import { BoardItemComponent } from '../../../../shared/board-item/board-item.component';
-import { BoardService } from '../../../../service/board.service';
+import { boardFacade } from '../../../../facade/board.facade';
 
 @Component({
   selector: 'app-my-projects',
@@ -18,7 +18,7 @@ import { BoardService } from '../../../../service/board.service';
 export class MyProjectsComponent {
   private projectFacade = inject(ProjectFacade);
   private activatedRoute = inject(ActivatedRoute);
-  private boardService = inject(BoardService);
+  private boardFacade = inject(boardFacade);
 
   public project$ = this.activatedRoute.paramMap.pipe(
     switchMap((params) => {
@@ -29,6 +29,6 @@ export class MyProjectsComponent {
   );
 
   public boards$ = this.project$.pipe(
-    switchMap((project: Project) => this.boardService.getBoards(project.id!))
+    switchMap((project: Project) => this.boardFacade.getMyBoards(project.id!))
   );
 }
