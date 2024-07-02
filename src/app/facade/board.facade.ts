@@ -25,11 +25,21 @@ export class boardFacade {
   public getBoards(projectId: number) {
     return this.boardService.getBoards(projectId);
   }
-  public createBoard( Boardspayload: Boardspayload, projectId: number): Observable<Board> {
+  public createBoard(
+    Boardspayload: Boardspayload,
+    projectId: number
+  ): Observable<Board> {
     return this.boardService.createBoard(Boardspayload, projectId).pipe(
       tap(() => {
         this.loadBoards(projectId);
       })
     );
+  }
+
+  public getBoardById(projectId: number, boardId: number): Observable<Board> {
+    return this.boardService.getBoardById(projectId, boardId);
+  }
+  public deleteBoard(projectId: number, boardId: number): Observable<Board> {
+    return this.boardService.deleteBoard(projectId, boardId);
   }
 }

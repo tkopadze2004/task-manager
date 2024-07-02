@@ -1,0 +1,30 @@
+.board--container {
+  border-bottom: 1px solid #051e4937;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  &__left {
+    width: 900px;
+    text-transform: capitalize;
+    padding: 0 0 10px 15px;
+    &--title {
+      font-size: 33px;
+      color: rgba(42, 41, 41, 0.9);
+      font-weight: 600;
+    }
+    &--created {
+      font-size: 14px;
+      font-style: italic;
+      color: rgb(175, 175, 175);
+      font-weight: 500;
+      margin-top: 6px;
+    }
+  }
+
+  &__right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

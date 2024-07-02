@@ -7,12 +7,23 @@ import { Board, Boardspayload } from '../core/interfaces/board';
   providedIn: 'root',
 })
 export class BoardService extends ApiService {
-  createBoard(boardPayload: Boardspayload, projectId: number): Observable<Board> {
+  public createBoard(
+    boardPayload: Boardspayload,
+    projectId: number
+  ): Observable<Board> {
     const headersObject = { project: projectId };
     return this.post<Board>('board', boardPayload, headersObject);
   }
 
-  getBoards(projectId: number): Observable<Board[]> {
+  public getBoards(projectId: number): Observable<Board[]> {
     return this.get<Board[]>('board', { project: projectId });
+  }
+
+  public getBoardById(projectId: number, boardId: number): Observable<Board> {
+    return this.get<Board>(`board/${boardId}`, { project: projectId });
+  }
+
+  public deleteBoard(projectId: number, boardId: number): Observable<Board> {
+    return this.delete<Board>(`board/${boardId}`, { projectId });
   }
 }

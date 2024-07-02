@@ -1,1 +1,16 @@
-<p>board-info works!</p>
+@if(board$|async ; as board){
+<div class="board--container">
+  <div class="board--container__left">
+    <div class="board--container__left--title">{{ board.name }}</div>
+    <div class="board--container__left--created">
+      {{ board.createdAt | date : "MMM d/ y" }}
+    </div>
+  </div>
+  <div class="board--container__right">
+    <div class="board--container__right--button">
+      <button mat-raised-button (click)="delete(board.id,board.projectId)">Delete</button>
+    </div>
+  </div>
+</div>
+}
+

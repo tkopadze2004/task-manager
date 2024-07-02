@@ -27,7 +27,7 @@ export const mainContentRoutes: Routes = [
         children: [
           {
             path: '',
-            component: BoardsComponent, 
+            component: BoardsComponent,
           },
           {
             path: 'board/:boardId',
