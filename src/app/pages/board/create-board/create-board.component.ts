@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AsyncPipe } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MODAL_DATA } from '../../../core/modal/modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-board',
@@ -38,9 +39,11 @@ export class CreateBoardComponent implements OnDestroy {
   private snackBar = inject(MatSnackBar);
   private modalRef = inject(ModalRef);
   private sub$ = new Subject();
+  router = inject(Router);
   projectId!: number;
-
+ boardId!:number
   form = new FormGroup({
+    id: new FormControl(),
     name: new FormControl<string>('', Validators.required),
     description: new FormControl<string>('', Validators.required),
     position: new FormControl<number>(1),
@@ -79,10 +82,14 @@ export class CreateBoardComponent implements OnDestroy {
         }),
         takeUntil(this.sub$)
       )
-      .subscribe(() => {
+      .subscribe((res) => {
         this.openSnackBar('Board created successfully!', 'Close');
         this.form.reset();
         this.modalRef.close();
+        const id = res.id;
+        setTimeout(() => {
+          this.router.navigate(['/home/mainContent/boards', this.projectId, 'board', id]);
+        }, 1000);
       });
   }
 
