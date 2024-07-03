@@ -6,7 +6,6 @@
     <div class="boards-container__header--title">Your project boards</div>
   </div>
   <div class="board-item">
-
     @for(board of boards$|async ; track board.id){
     <app-board-item
       [name]="board.name"
@@ -14,8 +13,13 @@
       matTooltipClass="custom-tooltip"
       matTooltipPosition="below"
       matTooltipShowDelay="50"
-      [routerLink]="['/home/mainContent/boards', board.projectId, 'board', board.id]"
-      >
+      [routerLink]="[
+        '/home/mainContent/boards',
+        board.projectId,
+        'board',
+        board.id
+      ]"
+    >
     </app-board-item>
     }
     <div class="add-board" (click)="createBoard()">
@@ -23,6 +27,4 @@
       <span>Create new board </span>
     </div>
   </div>
-
-
 </div>

@@ -41,7 +41,7 @@ export class CreateBoardComponent implements OnDestroy {
   private sub$ = new Subject();
   router = inject(Router);
   projectId!: number;
- boardId!:number
+  boardId!: number;
   form = new FormGroup({
     id: new FormControl(),
     name: new FormControl<string>('', Validators.required),
@@ -88,7 +88,12 @@ export class CreateBoardComponent implements OnDestroy {
         this.modalRef.close();
         const id = res.id;
         setTimeout(() => {
-          this.router.navigate(['/home/mainContent/boards', this.projectId, 'board', id]);
+          this.router.navigate([
+            '/home/mainContent/boards',
+            this.projectId,
+            'board',
+            id,
+          ]);
         }, 1000);
       });
   }

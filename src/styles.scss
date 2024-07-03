@@ -68,3 +68,39 @@ body {
 .overlay {
   background-color: none;
 }
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.task {
+  min-width: 200px;
+  max-width: 300px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.preview {
+  position: fixed;
+  width: 225px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.placeholder {
+  border-radius: 4px;
+  background-color: rgb(194, 194, 197);
+  height: 40px;
+  border: 1px dashed;
+}

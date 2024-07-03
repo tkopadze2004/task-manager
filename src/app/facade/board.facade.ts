@@ -41,7 +41,6 @@ export class boardFacade {
   }
   public deleteBoard(boardId: number, projectId: number): Observable<any> {
     console.log(boardId, projectId);
-
     return this.boardService.deleteBoard(boardId, projectId);
   }
 }

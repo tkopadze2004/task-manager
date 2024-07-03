@@ -2,17 +2,42 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../core/services';
 import { Observable } from 'rxjs';
 import { Board, Boardspayload } from '../core/interfaces/board';
+import { TaskStatus } from '../core/enums/task-status';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BoardService extends ApiService {
+
   public createBoard(
     boardPayload: Boardspayload,
     projectId: number
   ): Observable<Board> {
     const headersObject = { project: projectId };
-    return this.post<Board>('board', boardPayload, headersObject);
+    const defaultColumns = [
+      {
+        name: 'To-Do',
+        description: '',
+        position: 0,
+        taskStatus: TaskStatus.ToDo,
+      },
+      {
+        name: 'In Progress',
+        description: '',
+        position: 1,
+        taskStatus: TaskStatus.InProgress,
+      },
+      {
+        name: 'Done',
+        description: '',
+        position: 2,
+        taskStatus: TaskStatus.Done,
+      },
+    ];
+
+    const payloadWithColumns = { ...boardPayload, columns: defaultColumns };
+
+    return this.post<Board>('board', payloadWithColumns, headersObject);
   }
 
   public getBoards(projectId: number): Observable<Board[]> {
