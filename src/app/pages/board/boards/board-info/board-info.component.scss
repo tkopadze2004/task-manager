@@ -37,14 +37,13 @@
 }
 
 .column {
-  flex: 0 0 250px; /* Ensure fixed width for columns */
+  flex: 0 0 250px;
   margin: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #f7f7f7;
   padding: 10px;
 }
-
 
 .column-header {
   display: flex;
@@ -58,26 +57,3 @@
   font-weight: bold;
   font-size: 16px;
 }
-
-// .tasks {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 10px;
-//   margin-top: 5px;
-// }
-
-// .task {
-//   background-color: #ffffff;
-//   border: 1px solid #dddddd;
-//   border-radius: 4px;
-//   padding: 10px;
-//   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-// }
-// .placeholder {
-//   border-radius: 4px;
-//   background-color: rgb(194, 194, 197);
-//   height: 50px;
-//   border: 1px dashed;
-// }
-
-
