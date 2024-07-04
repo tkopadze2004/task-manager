@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { boardFacade } from '../../../../facade/board.facade';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { AsyncPipe, DatePipe, JsonPipe, NgFor } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import {
