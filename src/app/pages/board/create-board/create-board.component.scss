@@ -1,0 +1,48 @@
+.container {
+  &__head {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    &--close {
+      display: flex;
+      justify-content: end;
+
+      img {
+        padding: 3px;
+      }
+      img:hover {
+        cursor: pointer;
+        background-color: rgba(235, 235, 235, 0.558);
+        border-radius: 50%;
+      }
+    }
+    &--create-board {
+      margin-bottom: 43px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui;
+      font-size: 20px;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    mat-form-field {
+      height: 70px;
+
+      mat-label {
+        font-size: 14px;
+      }
+    }
+  }
+  button {
+    font-size: 16px;
+    margin: 14px 0 19px;
+    padding: 10px 35px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.962);
+  }
+}

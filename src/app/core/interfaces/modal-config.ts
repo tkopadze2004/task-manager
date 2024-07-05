@@ -4,6 +4,6 @@ export interface ModalConfig {
   height: number;
   backdrob: boolean;
   closeOnBackdropClick: boolean;
-  panelClass: string;
+  panelClass: string[];
   backdropClass: string;
 }

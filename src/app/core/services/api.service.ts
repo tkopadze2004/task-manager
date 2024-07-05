@@ -20,21 +20,21 @@ export class ApiService {
       params: httpparams,
     });
   }
-
-  post<T>(path: string, body: any): Observable<T> {
-    return this.http.post<T>(`${this.apiUrl}${path}`, body);
+  post<T>(path: string, body: any, headersObject?: any): Observable<T> {
+    const headers = headersObject ? new HttpHeaders(headersObject) : {};
+    return this.http.post<T>(`${this.apiUrl}${path}`, body, { headers });
   }
   put<T>(path: string, body: any): Observable<T> {
     return this.http.put<T>(`${this.apiUrl}${path}`, body);
   }
 
-  delete<T>(path: string, params?: any): Observable<T> {
-    const httpParams = new HttpParams({
-      fromObject: params,
-    });
+  delete<T>(path: string, headersObject?: any): Observable<T> {
+
+    const headers = headersObject ? new HttpHeaders(headersObject) : {};
+    console.log(headers);
 
     return this.http.delete<T>(`${this.apiUrl}${path}`, {
-      params: httpParams,
+      headers,
     });
   }
 }

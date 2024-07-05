@@ -18,7 +18,7 @@ const DEFAULT_CONFIG: ModalConfig = {
   backdrob: true,
   backdropClass: 'dark-overlay',
   closeOnBackdropClick: true,
-  panelClass: 'create-project',
+  panelClass: ['create-item'],
 };
 
 @Injectable({ providedIn: 'root' })

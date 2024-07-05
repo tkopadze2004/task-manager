@@ -36,7 +36,7 @@ export class HomeComponent {
       backdrob: true,
       backdropClass: 'dark-overlay',
       closeOnBackdropClick: true,
-      panelClass: 'create-project',
+      panelClass: ['create-item','projects'],
     });
   }
 }

@@ -44,7 +44,7 @@ export class ProjectItemComponent implements OnDestroy {
       backdrob: true,
       backdropClass: 'dark-overlay',
       closeOnBackdropClick: true,
-      panelClass: 'create-project',
+      panelClass: ['create-item','projects'],
       data: { project: this.project },
     });
   }
