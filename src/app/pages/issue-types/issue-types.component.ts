@@ -7,6 +7,7 @@ import { filter, switchMap, tap } from 'rxjs';
 import { AsyncPipe, DatePipe, JsonPipe, TitleCasePipe } from '@angular/common';
 import { IssueTypeFacade } from '../../facade/issue-type.facade';
 import { HeadComponent } from "../../shared/head/head.component";
+import { MatButtonModule } from '@angular/material/button';
 @Component({
     selector: 'app-issue-types',
     standalone: true,
@@ -19,14 +20,15 @@ import { HeadComponent } from "../../shared/head/head.component";
         JsonPipe,
         TitleCasePipe,
         HeadComponent,
-        DatePipe
+        DatePipe,
+        MatButtonModule
     ]
 })
 export class IssueTypesComponent {
   private route = inject(ActivatedRoute);
   private issueTypeFacade = inject(IssueTypeFacade);
 
-  displayedColumns: string[] = ['id', 'name', 'createdAt'];
+  displayedColumns: string[] = ['id', 'name', 'createdAt','actions'];
   dataSource = new MatTableDataSource<IssueType>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

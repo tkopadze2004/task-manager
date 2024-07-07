@@ -1,7 +1,7 @@
 table {
   width: 100vh;
 }
-.head{
+.head {
   border-bottom: 1px solid #051e4937;
   width: 900px;
   text-transform: capitalize;
@@ -10,4 +10,7 @@ table {
   justify-content: center;
   align-items: center;
   padding-bottom: 25px;
+}
+.actions {
+  padding-left: 60px;
 }
