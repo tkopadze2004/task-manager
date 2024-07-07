@@ -1,0 +1,13 @@
+table {
+  width: 100vh;
+}
+.head{
+  border-bottom: 1px solid #051e4937;
+  width: 900px;
+  text-transform: capitalize;
+  display: flex;
+  gap: 13px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 25px;
+}

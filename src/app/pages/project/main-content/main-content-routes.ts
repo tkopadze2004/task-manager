@@ -4,6 +4,7 @@ import { authGuard } from '../../../core/guards/auth.guard';
 import { MyProjectsComponent } from './my-projects/my-projects.component';
 import { BoardsComponent } from '../../board/boards/boards.component';
 import { BoardInfoComponent } from '../../board/boards/board-info/board-info.component';
+import { IssueTypesComponent } from '../../issue-types/issue-types.component';
 
 export const mainContentRoutes: Routes = [
   {
@@ -33,6 +34,19 @@ export const mainContentRoutes: Routes = [
             path: 'board/:boardId',
             component: BoardInfoComponent,
           },
+        ],
+      },
+      {
+        path: 'issue-types/:projectId',
+        children: [
+          {
+            path: '',
+            component: IssueTypesComponent,
+          },
+          // {
+          //   path: 'issue-type/:issueId',
+          //   component: BoardInfoComponent,
+          // },
         ],
       },
     ],
