@@ -6,7 +6,7 @@
     <div class="header__title">{{ title() }}</div>
   </div>
   @if(showButton()){
-  <button mat-flat-button (click)="buttonClick.emit()">
+  <button mat-flat-button [routerLink]="buttonRoute"  (click)="buttonClick.emit()">
     {{ button() }}
   </button>
   }

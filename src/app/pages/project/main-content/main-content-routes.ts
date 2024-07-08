@@ -5,6 +5,7 @@ import { MyProjectsComponent } from './my-projects/my-projects.component';
 import { BoardsComponent } from '../../board/boards/boards.component';
 import { BoardInfoComponent } from '../../board/boards/board-info/board-info.component';
 import { IssueTypesComponent } from '../../issue-types/issue-types.component';
+import { CreateEditIssueTypeComponent } from '../../issue-types/create-edit-issue-type/create-edit-issue-type.component';
 
 export const mainContentRoutes: Routes = [
   {
@@ -43,10 +44,14 @@ export const mainContentRoutes: Routes = [
             path: '',
             component: IssueTypesComponent,
           },
-          // {
-          //   path: 'issue-type/:issueId',
-          //   component: BoardInfoComponent,
-          // },
+          {
+            path: 'add',
+            component: CreateEditIssueTypeComponent,
+          },
+          {
+            path: 'issue-type/:issueId',
+            component: BoardInfoComponent,
+          },
         ],
       },
     ],

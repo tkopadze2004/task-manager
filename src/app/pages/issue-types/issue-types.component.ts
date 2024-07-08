@@ -2,7 +2,7 @@ import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { IssueType } from '../../core/interfaces/issue-type-interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { filter, switchMap, tap } from 'rxjs';
 import { AsyncPipe, DatePipe, JsonPipe, TitleCasePipe } from '@angular/common';
 import { IssueTypeFacade } from '../../facade/issue-type.facade';
@@ -21,12 +21,13 @@ import { MatButtonModule } from '@angular/material/button';
         TitleCasePipe,
         HeadComponent,
         DatePipe,
-        MatButtonModule
+        MatButtonModule,
     ]
 })
 export class IssueTypesComponent {
   private route = inject(ActivatedRoute);
   private issueTypeFacade = inject(IssueTypeFacade);
+  projectId?:number
 
   displayedColumns: string[] = ['id', 'name', 'createdAt','actions'];
   dataSource = new MatTableDataSource<IssueType>();
@@ -35,6 +36,7 @@ export class IssueTypesComponent {
   issueTypes$ = this.route.params.pipe(
     switchMap((params) => {
       const projectId = Number(params['projectId']);
+      this.projectId=projectId
       return this.issueTypeFacade.getIssueTypes(projectId);
     }),
     filter((issueTypes) => issueTypes !== null),
