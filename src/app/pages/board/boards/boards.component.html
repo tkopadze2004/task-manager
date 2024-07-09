@@ -1,10 +1,6 @@
 <div class="boards-container">
-  <div class="boards-container__header">
-    <div class="boards-container__header--image">
-      <img src="/images/user.png" />
-    </div>
-    <div class="boards-container__header--title">Your project boards</div>
-  </div>
+  <app-head name="Your project boards" image="/images/user.png"     [showButton]="false"
+  />
   <div class="board-item">
     @for(board of boards$|async ; track board.id){
     <app-board-item

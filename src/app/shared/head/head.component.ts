@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './head.component.scss',
 })
 export class HeadComponent {
-  title = input.required<string>();
+  name = input.required<string>();
   image = input<string>();
 
   button = input<string>();

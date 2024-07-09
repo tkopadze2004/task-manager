@@ -3,7 +3,7 @@
     @if(showImg()){
     <img [src]="image()" />
     }
-    <div class="header__title">{{ title() }}</div>
+    <div class="header__title">{{ name() }}</div>
   </div>
   @if(showButton()){
   <button mat-flat-button [routerLink]="buttonRoute"  (click)="buttonClick.emit()">
