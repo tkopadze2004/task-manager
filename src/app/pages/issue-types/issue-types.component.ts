@@ -7,21 +7,15 @@ import {
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { IssueType } from '../../core/interfaces/issue-type-interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
-import {
-  AsyncPipe,
-  DatePipe,
-  JsonPipe,
-  NgIf,
-  TitleCasePipe,
-} from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { IssueTypeFacade } from '../../facade/issue-type.facade';
 import { HeadComponent } from '../../shared/head/head.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-issue-types',
   standalone: true,
@@ -31,24 +25,22 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     AsyncPipe,
-    JsonPipe,
-    TitleCasePipe,
     HeadComponent,
     DatePipe,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule,
     MatSortModule,
     MatPaginator,
-    NgIf,
+    RouterLink,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IssueTypesComponent {
   private route = inject(ActivatedRoute);
-  private issueTypeFacade = inject(IssueTypeFacade);
+  private isueTypeFacade = inject(IssueTypeFacade);
   public projectId?: number;
   private issues!: IssueType[];
+  private snackBar = inject(MatSnackBar);
 
   public displayedColumns: string[] = ['id', 'name', 'createdAt', 'actions'];
   public dataSource = new MatTableDataSource<IssueType>();
@@ -60,7 +52,7 @@ export class IssueTypesComponent {
     switchMap((params) => {
       const projectId = Number(params['projectId']);
       this.projectId = projectId;
-      return this.issueTypeFacade.getIssueTypes(projectId);
+      return this.isueTypeFacade.GetIssueTypes(projectId);
     }),
     tap((data) => {
       this.issues = data;
@@ -69,4 +61,16 @@ export class IssueTypesComponent {
       this.dataSource.sort = this.sort;
     })
   );
+
+  delete(boardId: number, projectId: number) {
+    this.isueTypeFacade.deleteIssueType(boardId, projectId).subscribe(() => {
+      this.openSnackBar('Issue Type deleted successfully!', 'Close');
+      this.isueTypeFacade.loadIssues(projectId);
+    });
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+    });
+  }
 }

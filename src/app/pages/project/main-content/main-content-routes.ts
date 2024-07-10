@@ -49,8 +49,8 @@ export const mainContentRoutes: Routes = [
             component: CreateEditIssueTypeComponent,
           },
           {
-            path: 'issue-type/:issueId',
-            component: BoardInfoComponent,
+            path: 'edit/:id',
+            component: CreateEditIssueTypeComponent,
           },
         ],
       },
