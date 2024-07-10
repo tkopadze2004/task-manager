@@ -9,15 +9,15 @@ export interface IssueType {
   isActive: boolean;
   type: IssueTypes;
   issueTypeColumns: IssueTypeColumn[];
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 }
 export interface IssueTypeColumn {
   id?: number;
   name: string;
   filedName: string;
-  type: string;
+  type: IssueType;
   isRequired: boolean;
   issueTypeId: number;
   issueType: string;
