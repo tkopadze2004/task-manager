@@ -32,8 +32,6 @@ export class ApiService {
 
   delete<T>(path: string, headersObject?: any): Observable<T> {
     const headers = headersObject ? new HttpHeaders(headersObject) : {};
-    console.log(headers);
-
     return this.http.delete<T>(`${this.apiUrl}${path}`, {
       headers,
     });
