@@ -1,0 +1,21 @@
+table {
+  width: 100vh;
+}
+.head {
+  border-bottom: 1px solid #051e4937;
+  width: 900px;
+  text-transform: capitalize;
+  display: flex;
+  gap: 13px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 25px;
+}
+.actions {
+  padding-left: 60px;
+}
+.noepics {
+  color: rgb(66, 65, 65);
+  text-align: center;
+  padding-top: 15px;
+}

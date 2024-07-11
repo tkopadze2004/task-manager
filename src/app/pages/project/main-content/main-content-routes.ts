@@ -6,6 +6,8 @@ import { BoardsComponent } from '../../board/boards/boards.component';
 import { BoardInfoComponent } from '../../board/boards/board-info/board-info.component';
 import { IssueTypesComponent } from '../../issue-types/issue-types.component';
 import { CreateEditIssueTypeComponent } from '../../issue-types/create-edit-issue-type/create-edit-issue-type.component';
+import { EpicComponent } from '../../epic/epic.component';
+import { CreateEditEpicComponent } from '../../epic/create-edit-epic/create-edit-epic.component';
 
 export const mainContentRoutes: Routes = [
   {
@@ -51,6 +53,23 @@ export const mainContentRoutes: Routes = [
           {
             path: 'edit/:id',
             component: CreateEditIssueTypeComponent,
+          },
+        ],
+      },
+      {
+        path: 'epics/:projectId',
+        children: [
+          {
+            path: '',
+            component: EpicComponent,
+          },
+          {
+            path: 'add',
+            component: CreateEditEpicComponent,
+          },
+          {
+            path: 'edit/:id',
+            component: CreateEditEpicComponent,
           },
         ],
       },
