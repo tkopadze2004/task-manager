@@ -3,12 +3,15 @@
   <div>
     <app-project-item [project]="project" />
   </div>
+
+  <div></div>
   }
 </div>
 <div class="boards">
   <div class="boards__title">Boards :</div>
   <div class="boards__item">
-    @if(boards$|async;as board){ @for(board of board ;track board){
+    @if(boards$|async;as board){
+    @for(board of board ;track board){
     <app-board-item [name]="board.name" />
     } @if(board.length===0){
     <div class="no-boards-container">

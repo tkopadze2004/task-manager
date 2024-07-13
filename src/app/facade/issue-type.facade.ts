@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, shareReplay, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { IssueTypeService } from '../service/issue-type';
 import { IssueType } from '../core/interfaces/issue-type-interface';
 
@@ -9,50 +9,38 @@ export class IssueTypeFacade {
   private issueSubject = new BehaviorSubject<number | null>(null);
 
   issues$ = this.issueSubject.asObservable().pipe(
-    switchMap((projectId) => this.getIssueTypes(projectId!)),
-    shareReplay(1)
+    switchMap(() => this.getIssueTypes()),
   );
 
-  public loadIssues(projectId: number) {
-    this.issueSubject.next(projectId);
+  public loadIssues() {
+    this.issueSubject.next(null);
   }
 
-  public GetIssueTypes(projectId: number): Observable<IssueType[]> {
-    this.loadIssues(projectId);
+  public GetIssueTypes(): Observable<IssueType[]> {
+    this.loadIssues();
     return this.issues$;
   }
 
-  getIssueTypes(projectId: number): Observable<IssueType[]> {
-    return this.issueTypeService.getIssueTypes(projectId);
+  getIssueTypes(): Observable<IssueType[]> {
+    return this.issueTypeService.getIssueTypes();
   }
 
-  getIssueType(projectId: number, issueTypeId: number): Observable<IssueType> {
-    return this.issueTypeService.getIssueType(projectId, issueTypeId);
+  getIssueType(issueTypeId: number): Observable<IssueType> {
+    return this.issueTypeService.getIssueType(issueTypeId);
   }
 
-  createIsuueType(
-    projectId: number,
-    issueTypePayload: IssueType
-  ): Observable<IssueType> {
-    return this.issueTypeService.createIssueTypes(projectId, issueTypePayload);
+  createIsuueType(issueTypePayload: IssueType): Observable<IssueType> {
+    return this.issueTypeService.createIssueTypes(issueTypePayload);
   }
 
   editIssueType(
     issueTypeId: number,
-    projectId: number,
     issueTypePayload: IssueType
   ): Observable<IssueType> {
-    return this.issueTypeService.editIssueType(
-      issueTypeId,
-      projectId,
-      issueTypePayload
-    );
+    return this.issueTypeService.editIssueType(issueTypeId, issueTypePayload);
   }
 
-  deleteIssueType(
-    issueTypeId: number,
-    projectId: number
-  ): Observable<IssueType> {
-    return this.issueTypeService.deleteIssueType(issueTypeId, projectId);
+  deleteIssueType(issueTypeId: number): Observable<IssueType> {
+    return this.issueTypeService.deleteIssueType(issueTypeId);
   }
 }

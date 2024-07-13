@@ -32,7 +32,6 @@ import { EpicFacade } from '../../../facade/epic.facade';
 })
 export class CreateEditEpicComponent implements OnInit, OnDestroy {
   private epicFacade = inject(EpicFacade);
-  private projectId!: number;
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
   private sub$ = new Subject();
@@ -47,14 +46,10 @@ export class CreateEditEpicComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.pipe(takeUntil(this.sub$)).subscribe((params) => {
-      if ('projectId' in params) {
-        this.projectId = +params['projectId'];
-      }
-
       if ('id' in params) {
         this.id = +params['id'];
         this.epicFacade
-          .getEpic(this.projectId, this.id)
+          .getEpic(this.id)
           .pipe(takeUntil(this.sub$))
           .subscribe((epic) => {
             this.epicForm.patchValue({
@@ -84,7 +79,7 @@ export class CreateEditEpicComponent implements OnInit, OnDestroy {
 
     if (this.id) {
       this.epicFacade
-        .editEpic(this.id, this.projectId, payload)
+        .editEpic(this.id, payload)
         .pipe(
           catchError(({ error }) => {
             this.openSnackBar(error.message, 'Close');
@@ -94,12 +89,12 @@ export class CreateEditEpicComponent implements OnInit, OnDestroy {
         )
         .subscribe(() => {
           this.openSnackBar('Epic updated successfully!', 'Close');
-          this.router.navigate(['/home/mainContent/epics', this.projectId]);
+          this.router.navigate(['/home/mainContent/epics']);
           this.epicForm.reset();
         });
     } else {
       this.epicFacade
-        .createEpic(this.projectId, payload)
+        .createEpic(payload)
         .pipe(
           catchError(({ error }) => {
             this.openSnackBar(error.message, 'Close');
@@ -109,7 +104,7 @@ export class CreateEditEpicComponent implements OnInit, OnDestroy {
         )
         .subscribe(() => {
           this.openSnackBar('Epic created successfully!', 'Close');
-          this.router.navigate(['/home/mainContent/epics', this.projectId]);
+          this.router.navigate(['/home/mainContent/epics']);
           this.epicForm.reset();
         });
     }

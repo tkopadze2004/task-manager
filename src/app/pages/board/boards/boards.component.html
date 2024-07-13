@@ -1,5 +1,8 @@
 <div class="boards-container">
-  <app-head name="Your project boards" image="/images/user.png"     [showButton]="false"
+  <app-head
+    name="Your project boards"
+    image="/images/user.png"
+    [showButton]="false"
   />
   <div class="board-item">
     @for(board of boards$|async ; track board.id){
@@ -9,12 +12,7 @@
       matTooltipClass="custom-tooltip"
       matTooltipPosition="below"
       matTooltipShowDelay="50"
-      [routerLink]="[
-        '/home/mainContent/boards',
-        board.projectId,
-        'board',
-        board.id
-      ]"
+      [routerLink]="['/home/mainContent/boards', 'board', board.id]"
     >
     </app-board-item>
     }

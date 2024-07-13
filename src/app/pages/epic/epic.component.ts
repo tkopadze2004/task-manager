@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { switchMap, tap } from 'rxjs';
+import {  RouterLink } from '@angular/router';
+import {  tap } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { HeadComponent } from '../../shared/head/head.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,9 +36,7 @@ import { EpicFacade } from '../../facade/epic.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EpicComponent {
-  private route = inject(ActivatedRoute);
   private epicFacade = inject(EpicFacade);
-  public projectId?: number;
   private epics!: Epic[];
   private snackBar = inject(MatSnackBar);
 
@@ -48,12 +46,8 @@ export class EpicComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  public epics$ = this.route.params.pipe(
-    switchMap((params) => {
-      const projectId = Number(params['projectId']);
-      this.projectId = projectId;
-      return this.epicFacade.GetEpicss(projectId);
-    }),
+  public epics$ = this.epicFacade.GetEpicss().pipe(
+
     tap((data) => {
       this.epics = data;
       this.dataSource = new MatTableDataSource(this.epics);
@@ -62,10 +56,10 @@ export class EpicComponent {
     })
   );
 
-  delete(boardId: number, projectId: number) {
-    this.epicFacade.deleteEpic(boardId, projectId).subscribe(() => {
+  delete(boardId: number) {
+    this.epicFacade.deleteEpic(boardId).subscribe(() => {
       this.openSnackBar('Epic deleted successfully!', 'Close');
-      this.epicFacade.GetEpicss(projectId);
+      this.epicFacade.GetEpicss();
     });
   }
   openSnackBar(message: string, action: string) {

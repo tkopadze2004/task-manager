@@ -7,13 +7,14 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { tokenInterceptor } from './core/interceptors/token.interceptor';
 import {  OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
+import { projectInterceptor } from './core/interceptors/project.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch(),withInterceptors([tokenInterceptor])),
+    provideHttpClient(withFetch(),withInterceptors([tokenInterceptor,projectInterceptor])),
     importProvidersFrom([OverlayModule,PortalModule])
   ],
 };

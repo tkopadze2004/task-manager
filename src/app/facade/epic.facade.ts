@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Epic, Epicpayload } from '../core/interfaces/epic';
-import { BehaviorSubject, Observable, shareReplay, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { EpicService } from '../service/epic.service';
 
 @Injectable({ providedIn: 'root' })
@@ -8,41 +8,36 @@ export class EpicFacade {
   private EpicService = inject(EpicService);
   private epicSubject = new BehaviorSubject<number | null>(null);
 
-  epics$ = this.epicSubject.asObservable().pipe(
-    switchMap((projectId) => this.getEpics(projectId!)),
-    shareReplay(1)
-  );
+  epics$ = this.epicSubject
+    .asObservable()
+    .pipe(switchMap(() => this.getEpics()));
 
-  public loadEpics(projectId: number) {
-    this.epicSubject.next(projectId);
+  public loadEpics() {
+    this.epicSubject.next(null);
   }
 
-  public GetEpicss(projectId: number): Observable<Epic[]> {
-    this.loadEpics(projectId);
+  public GetEpicss(): Observable<Epic[]> {
+    this.loadEpics();
     return this.epics$;
   }
 
-  getEpics(projectId: number): Observable<Epic[]> {
-    return this.EpicService.getEpics(projectId);
+  getEpics(): Observable<Epic[]> {
+    return this.EpicService.getEpics();
   }
 
-  createEpic(projectId: number, payload: Epicpayload): Observable<Epic> {
-    return this.EpicService.createEpic(projectId, payload);
+  createEpic(payload: Epicpayload): Observable<Epic> {
+    return this.EpicService.createEpic(payload);
   }
 
-  editEpic(
-    epicId: number,
-    projectId: number,
-    epicpayload: Epicpayload
-  ): Observable<Epic> {
-    return this.EpicService.editEpic(epicId, projectId, epicpayload);
+  editEpic(epicId: number, epicpayload: Epicpayload): Observable<Epic> {
+    return this.EpicService.editEpic(epicId, epicpayload);
   }
 
-  deleteEpic(epicId: number, projectId: number): Observable<Epic> {
-    return this.EpicService.deleteEpic(epicId, projectId);
+  deleteEpic(epicId: number): Observable<Epic> {
+    return this.EpicService.deleteEpic(epicId);
   }
 
-  getEpic(projectId: number, epicId: number): Observable<Epic> {
-    return this.EpicService.getEpic(projectId, epicId);
+  getEpic(epicId: number): Observable<Epic> {
+    return this.EpicService.getEpic(epicId);
   }
 }

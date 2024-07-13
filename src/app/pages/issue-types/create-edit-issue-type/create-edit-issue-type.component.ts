@@ -36,7 +36,6 @@ import { catchError, Subject, takeUntil, throwError } from 'rxjs';
 export class CreateEditIssueTypeComponent implements OnInit, OnDestroy {
   private issueTypeFacade = inject(IssueTypeFacade);
   public issueTypes = Object.values(IssueTypes);
-  private projectId!: number;
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
   private sub$ = new Subject();
@@ -56,14 +55,10 @@ export class CreateEditIssueTypeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.pipe(takeUntil(this.sub$)).subscribe((params) => {
-      if ('projectId' in params) {
-        this.projectId = +params['projectId'];
-      }
-
       if ('id' in params) {
         this.id = +params['id'];
         this.issueTypeFacade
-          .getIssueType(this.projectId, this.id)
+          .getIssueType( this.id)
           .pipe(takeUntil(this.sub$))
           .subscribe((issueType) => {
             this.issueTypeForm.patchValue({
@@ -146,7 +141,7 @@ export class CreateEditIssueTypeComponent implements OnInit, OnDestroy {
 
     if (this.id) {
       this.issueTypeFacade
-        .editIssueType(this.id, this.projectId, payload)
+        .editIssueType(this.id, payload)
         .pipe(
           catchError(({ error }) => {
             this.openSnackBar(error.message, 'Close');
@@ -158,13 +153,12 @@ export class CreateEditIssueTypeComponent implements OnInit, OnDestroy {
           this.openSnackBar('Issue type updated successfully!', 'Close');
           this.router.navigate([
             '/home/mainContent/issue-types',
-            this.projectId,
           ]);
           this.issueTypeForm.reset();
         });
     } else {
       this.issueTypeFacade
-        .createIsuueType(this.projectId, payload)
+        .createIsuueType( payload)
         .pipe(
           catchError(({ error }) => {
             this.openSnackBar(error.message, 'Close');
@@ -176,7 +170,6 @@ export class CreateEditIssueTypeComponent implements OnInit, OnDestroy {
           this.openSnackBar('Issue type created successfully!', 'Close');
           this.router.navigate([
             '/home/mainContent/issue-types',
-            this.projectId,
           ]);
           this.issueTypeForm.reset();
         });

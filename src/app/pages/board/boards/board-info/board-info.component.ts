@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { boardFacade } from '../../../../facade/board.facade';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, switchMap, takeUntil } from 'rxjs';
@@ -37,7 +37,6 @@ export class BoardInfoComponent implements OnDestroy {
   private route = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
-  projectId!: number;
   boardId!: number;
   sub$ = new Subject();
 
@@ -52,24 +51,21 @@ export class BoardInfoComponent implements OnDestroy {
 
   board$ = this.route.params.pipe(
     switchMap((params) => {
-      const projectId = Number(params['projectId']);
       const boardId = Number(params['boardId']);
-      this.projectId = projectId;
       this.boardId = boardId;
-      console.log(params);
-      return this.boardFacade.getBoardById(projectId, boardId);
+      return this.boardFacade.getBoardById(boardId);
     })
   );
 
-  delete(boardId: number, projectId: number) {
+  delete(boardId: number) {
     this.boardFacade
-      .deleteBoard(boardId, projectId)
+      .deleteBoard(boardId)
       .pipe(takeUntil(this.sub$))
       .subscribe(() => {
         this.openSnackBar('Board deleted successfully!', 'Close');
-        this.boardFacade.loadBoards(projectId);
+        this.boardFacade.loadBoards();
         setTimeout(() => {
-          this.router.navigate(['/home/mainContent/boards', this.projectId]);
+          this.router.navigate(['/home/mainContent/boards']);
         }, 3000);
       });
   }

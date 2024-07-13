@@ -3,7 +3,7 @@
     name="issue types"
     button="add issue type"
     [showImg]="false"
-    [buttonRoute]="['/home/mainContent/issue-types', projectId, 'add']"
+    [buttonRoute]="['/home/mainContent/issue-types', 'add']"
   />
 </div>
 
@@ -32,18 +32,11 @@
       <td mat-cell *matCellDef="let element">
         <button
           mat-button
-          [routerLink]="[
-            '/home/mainContent/issue-types',
-            projectId,
-            'edit',
-            element.id
-          ]"
+          [routerLink]="['/home/mainContent/issue-types', 'edit', element.id]"
         >
           Edit
         </button>
-        <button mat-button (click)="delete(element.id, projectId!)">
-          Delete
-        </button>
+        <button mat-button (click)="delete(element.id)">Delete</button>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

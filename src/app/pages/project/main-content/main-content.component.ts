@@ -1,13 +1,5 @@
-import { Component, inject } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
-import { Observable, filter, map, startWith } from 'rxjs';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -17,15 +9,4 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
-export class MainContentComponent {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-
-  public projectId$: Observable<null | number> = this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-    startWith(null),
-    map(() => {
-      return this.route.snapshot.firstChild?.params['projectId'];
-    })
-  );
-}
+export class MainContentComponent {}

@@ -23,11 +23,11 @@ export const mainContentRoutes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'myProject/:projectId',
+        path: 'myProject',
         component: MyProjectsComponent,
       },
       {
-        path: 'boards/:projectId',
+        path: 'boards',
         children: [
           {
             path: '',
@@ -40,7 +40,7 @@ export const mainContentRoutes: Routes = [
         ],
       },
       {
-        path: 'issue-types/:projectId',
+        path: 'issue-types',
         children: [
           {
             path: '',
@@ -57,7 +57,7 @@ export const mainContentRoutes: Routes = [
         ],
       },
       {
-        path: 'epics/:projectId',
+        path: 'epics',
         children: [
           {
             path: '',

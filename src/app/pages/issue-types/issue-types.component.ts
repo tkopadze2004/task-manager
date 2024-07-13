@@ -7,8 +7,8 @@ import {
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { IssueType } from '../../core/interfaces/issue-type-interface';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { switchMap, tap } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { tap } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { IssueTypeFacade } from '../../facade/issue-type.facade';
 import { HeadComponent } from '../../shared/head/head.component';
@@ -36,9 +36,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IssueTypesComponent {
-  private route = inject(ActivatedRoute);
   private isueTypeFacade = inject(IssueTypeFacade);
-  public projectId?: number;
   private issues!: IssueType[];
   private snackBar = inject(MatSnackBar);
 
@@ -48,12 +46,7 @@ export class IssueTypesComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  public issueTypes$ = this.route.params.pipe(
-    switchMap((params) => {
-      const projectId = Number(params['projectId']);
-      this.projectId = projectId;
-      return this.isueTypeFacade.GetIssueTypes(projectId);
-    }),
+  public issueTypes$ = this.isueTypeFacade.GetIssueTypes().pipe(
     tap((data) => {
       this.issues = data;
       this.dataSource = new MatTableDataSource(this.issues);
@@ -62,10 +55,10 @@ export class IssueTypesComponent {
     })
   );
 
-  delete(boardId: number, projectId: number) {
-    this.isueTypeFacade.deleteIssueType(boardId, projectId).subscribe(() => {
+  delete(boardId: number) {
+    this.isueTypeFacade.deleteIssueType(boardId).subscribe(() => {
       this.openSnackBar('Issue Type deleted successfully!', 'Close');
-      this.isueTypeFacade.loadIssues(projectId);
+      this.isueTypeFacade.loadIssues();
     });
   }
   openSnackBar(message: string, action: string) {

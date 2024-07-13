@@ -1,9 +1,8 @@
 <div class="main-content">
   <div class="main-content__left">
     <ul class="main-content__left--menu">
-      @if(projectId$ | async ;as id){
       <li
-        [routerLink]="['/home/mainContent/myProject', id]"
+        [routerLink]="['/home/mainContent/myProject']"
         routerLinkActive="active"
       >
         <div class="side-menu__name">
@@ -12,32 +11,32 @@
         <div class="side-menu__name">Project</div>
       </li>
 
-      <li [routerLink]="['/home/mainContent/boards',id]" routerLinkActive="active">
-        <div
-          class="side-menu__name"
-
-        >
+      <li [routerLink]="['/home/mainContent/boards']" routerLinkActive="active">
+        <div class="side-menu__name">
           <img src="/images/boards.png" />
         </div>
         <div class="side-menu__name">Boards</div>
       </li>
-      <li  routerLinkActive="active" [routerLink]="['/home/mainContent/issue-types',id]"   routerLinkActive="active">
-        <div
-        class="side-menu__name"
-        >
-        <img src="/images/issue.png" />
-      </div>
+      <li
+        routerLinkActive="active"
+        [routerLink]="['/home/mainContent/issue-types']"
+        routerLinkActive="active"
+      >
+        <div class="side-menu__name">
+          <img src="/images/issue.png" />
+        </div>
         <div class="side-menu__name">Issue Types</div>
       </li>
-      <li  routerLinkActive="active" [routerLink]="['/home/mainContent/epics',id]"   routerLinkActive="active">
-        <div
-        class="side-menu__name"
-        >
-        <img src="/images/epic.png" />
-      </div>
+      <li
+        routerLinkActive="active"
+        [routerLink]="['/home/mainContent/epics']"
+        routerLinkActive="active"
+      >
+        <div class="side-menu__name">
+          <img src="/images/epic.png" />
+        </div>
         <div class="side-menu__name">Epics</div>
       </li>
-      }
       <li routerLink="/mainContent/users" routerLinkActive="active">
         <div class="side-menu__name">
           <img src="/images/users.svg" />

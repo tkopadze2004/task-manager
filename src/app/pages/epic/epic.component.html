@@ -3,7 +3,7 @@
     name="epics"
     button="create epic "
     [showImg]="false"
-    [buttonRoute]="['/home/mainContent/epics', projectId, 'add']"
+    [buttonRoute]="['/home/mainContent/epics', 'add']"
   />
 </div>
 
@@ -32,18 +32,11 @@
       <td mat-cell *matCellDef="let element">
         <button
           mat-button
-          [routerLink]="[
-            '/home/mainContent/epics',
-            projectId,
-            'edit',
-            element.id
-          ]"
+          [routerLink]="['/home/mainContent/epics', 'edit', element.id]"
         >
           Edit
         </button>
-        <button mat-button (click)="delete(element.id, projectId!)">
-          Delete
-        </button>
+        <button mat-button (click)="delete(element.id)">Delete</button>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -8,12 +8,9 @@ import { TaskStatus } from '../core/enums/task-status';
   providedIn: 'root',
 })
 export class BoardService extends ApiService {
-
   public createBoard(
-    boardPayload: Boardspayload,
-    projectId: number
+    boardPayload: Boardspayload
   ): Observable<Board> {
-    const headersObject = { project: projectId };
     const defaultColumns = [
       {
         name: 'To-Do',
@@ -37,19 +34,18 @@ export class BoardService extends ApiService {
 
     const payloadWithColumns = { ...boardPayload, columns: defaultColumns };
 
-    return this.post<Board>('board', payloadWithColumns, headersObject);
+    return this.post<Board>('board', payloadWithColumns);
   }
 
-  public getBoards(projectId: number): Observable<Board[]> {
-    return this.get<Board[]>('board', { project: projectId });
+  public getBoards(): Observable<Board[]> {
+    return this.get<Board[]>('board');
   }
 
-  public getBoardById(projectId: number, boardId: number): Observable<Board> {
-    return this.get<Board>(`board/${boardId}`, { project: projectId });
+  public getBoardById( boardId: number): Observable<Board> {
+    return this.get<Board>(`board/${boardId}`);
   }
 
-  public deleteBoard(boardId: number, projectId: number): Observable<any> {
-    const headers = { project: projectId.toString() };
-    return this.delete(`board/${boardId}`, headers);
+  public deleteBoard(boardId: number): Observable<any> {
+    return this.delete(`board/${boardId}`);
   }
 }

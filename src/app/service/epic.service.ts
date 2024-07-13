@@ -4,32 +4,25 @@ import { Observable } from 'rxjs';
 import { ApiService } from '../core/services';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class EpicService extends ApiService{
-
-  getEpics(projectId: number): Observable<Epic[]> {
-    return this.get<Epic[]>('epics', { project: projectId });
+export class EpicService extends ApiService {
+  getEpics(): Observable<Epic[]> {
+    return this.get<Epic[]>('epics');
   }
 
-  createEpic(
-    projectId: number,
-    payload: Epicpayload
-  ): Observable<Epic> {
-    const headersObject = { project: projectId };
-    return this.post<Epic>(`epics`, payload, headersObject);
+  createEpic(payload: Epicpayload): Observable<Epic> {
+    return this.post<Epic>(`epics`, payload);
   }
 
-  editEpic(epicId: number, projectId: number,epicpayload: Epicpayload): Observable<Epic> {
-
-    return this.put<Epic>( `epics/${epicId}`,epicpayload,{ project: projectId }
-    );
+  editEpic(epicId: number, epicpayload: Epicpayload): Observable<Epic> {
+    return this.put<Epic>(`epics/${epicId}`, epicpayload);
   }
 
-  deleteEpic( epicId: number,projectId: number): Observable<Epic> {
-  return this.delete<Epic>(`epics/${epicId}`,  { project: projectId })
+  deleteEpic(epicId: number): Observable<Epic> {
+    return this.delete<Epic>(`epics/${epicId}`);
   }
-  getEpic(projectId: number, epicId: number): Observable<Epic> {
-    return this.get<Epic>(`epics/${epicId}`, { project: projectId });
+  getEpic(epicId: number): Observable<Epic> {
+    return this.get<Epic>(`epics/${epicId}`);
   }
 }

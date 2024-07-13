@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -15,7 +15,6 @@ import { Subject, catchError, takeUntil, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AsyncPipe } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MODAL_DATA } from '../../../core/modal/modal.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -40,7 +39,6 @@ export class CreateBoardComponent implements OnDestroy {
   private modalRef = inject(ModalRef);
   private sub$ = new Subject();
   router = inject(Router);
-  projectId!: number;
   boardId!: number;
   form = new FormGroup({
     id: new FormControl(),
@@ -48,11 +46,6 @@ export class CreateBoardComponent implements OnDestroy {
     description: new FormControl<string>('', Validators.required),
     position: new FormControl<number>(1),
   });
-
-  constructor(@Inject(MODAL_DATA) public data: { projectId: number }) {
-    console.log('projectId in CreateBoardComponent:', this.data.projectId);
-    this.projectId = this.data.projectId;
-  }
 
   createBoard() {
     if (this.form.invalid) {
@@ -74,7 +67,7 @@ export class CreateBoardComponent implements OnDestroy {
     };
 
     this.boardFacade
-      .createBoard(payload, this.projectId)
+      .createBoard(payload)
       .pipe(
         catchError(({ error }) => {
           this.openSnackBar(error.message, 'Close');
@@ -88,12 +81,7 @@ export class CreateBoardComponent implements OnDestroy {
         this.modalRef.close();
         const id = res.id;
         setTimeout(() => {
-          this.router.navigate([
-            '/home/mainContent/boards',
-            this.projectId,
-            'board',
-            id,
-          ]);
+          this.router.navigate(['/home/mainContent/boards', 'board', id]);
         }, 1000);
       });
   }

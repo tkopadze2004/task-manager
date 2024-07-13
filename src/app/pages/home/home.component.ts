@@ -7,7 +7,8 @@ import { CreateProjectComponent } from '../project/create-edit-project/create-ed
 import { MatButtonModule } from '@angular/material/button';
 import { ProjectFacade } from '../../facade';
 import { ModalService } from '../../core/modal/modal.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { storageService } from '../../core/services';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,13 @@ export class HomeComponent {
   projectFacade = inject(ProjectFacade);
   projects$ = this.projectFacade.getMyProjects();
   modalService = inject(ModalService);
+  router = inject(Router);
+  storageService = inject(storageService);
+
+  getProjectById(projectId: number): void {
+    this.projectFacade.getProjectByid(projectId);
+    this.router.navigate(['/home/mainContent/myProject']);
+  }
 
   createProject() {
     this.modalService.open(CreateProjectComponent, {
@@ -36,7 +44,7 @@ export class HomeComponent {
       backdrob: true,
       backdropClass: 'dark-overlay',
       closeOnBackdropClick: true,
-      panelClass: ['create-item','projects'],
+      panelClass: ['create-item', 'projects'],
     });
   }
 }
