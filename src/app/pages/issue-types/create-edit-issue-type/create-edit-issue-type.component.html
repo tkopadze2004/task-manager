@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="container__form-wrapper">
+    <h2 class="container__form-wrapper--title">Create Issue Type</h2>
+    <form [formGroup]="issueTypeForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <mat-label>Issue Type Name</mat-label>
+        <input type="text" matInput formControlName="name" />
+        @if(issueTypeForm.get('name')?.hasError('required')){
+        <mat-error> name is required </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Issue Type Description</mat-label>
+        <textarea matInput formControlName="description" required></textarea>
+        @if(issueTypeForm.get('description')?.hasError('required')){
+        <mat-error> description is required </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Color</mat-label>
+        <input
+          matInput
+          placeholder="Color"
+          formControlName="color"
+          type="color"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Icon</mat-label>
+        <input type="text" matInput formControlName="icon" />
+        @if(issueTypeForm.get('icon')?.hasError('required')){
+        <mat-error> icon is required </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Issue Type</mat-label>
+        <mat-select formControlName="type">
+          @for (type of issueTypes; track type) {
+          <mat-option [value]="type">
+            {{ type }}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div formArrayName="issueTypeColumns">
+        @for (column of issueTypeColumns.controls; track column; let i =$index )
+        {
+        <div [formGroupName]="i" class="container__column-group">
+          <mat-form-field>
+            <mat-label>Column Name</mat-label>
+            <input type="text" matInput formControlName="name" />
+            @if(column.get('name')?.hasError('required')){
+            <mat-error> Column name is required </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Field Name</mat-label>
+            <input type="text" matInput formControlName="filedName" />
+            @if(column.get('filedName')?.hasError('required')){
+            <mat-error> Field name is required </mat-error>
+            }
+          </mat-form-field>
+
+          <section>
+            <mat-checkbox formControlName="isRequired">isRequired</mat-checkbox>
+          </section>
+
+          <button
+            mat-raised-button
+            type="button"
+            (click)="removeIssueTypeColumn(i)"
+          >
+            Remove
+          </button>
+        </div>
+        }
+      </div>
+
+      <div class="container__actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="addIssueTypeColumn()"
+        >
+          Add Column
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="issueTypeForm.invalid"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

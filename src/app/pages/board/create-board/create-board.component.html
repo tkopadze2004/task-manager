@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="container__head">
+    <div class="container__head--close" (click)="close()">
+      <img src="/images/close.svg" />
+    </div>
+    <span class="container__head--create-board">create board</span>
+  </div>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Board Name</mat-label>
+      <input type="text" matInput formControlName="name" />
+      @if(form.get('name')?.hasError('required')){
+      <mat-error> Board name is required </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Board description</mat-label>
+      <input type="text" matInput formControlName="description" />
+      @if(form.get('description')?.hasError('required')){
+      <mat-error> description is required </mat-error>
+      }
+    </mat-form-field>
+  </form>
+  <button mat-flat-button (click)="createBoard()">create</button>
+</div>

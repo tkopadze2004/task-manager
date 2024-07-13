@@ -2,11 +2,11 @@ import { Component, inject } from '@angular/core';
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ProjectFacade } from '../../facade';
 import { ModalService } from '../../core/modal/modal.service';
 import { CreateProjectComponent } from '../../pages/project/create-edit-project/create-edit-project.component';
-import { tap } from 'rxjs';
+import { storageService } from '../../core/services';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +20,13 @@ export class HeaderComponent {
   projects$ = this.projectFacade.getMyProjects();
   modalService = inject(ModalService);
 
+  router = inject(Router);
+  storageService = inject(storageService);
+  getProjectById(projectId: number): void {
+    this.projectFacade.getProjectByid(projectId);
+    this.router.navigate(['/home/mainContent/myProject']);
+  }
+
   createProject() {
     this.modalService.open(CreateProjectComponent, {
       width: 80,
@@ -27,7 +34,7 @@ export class HeaderComponent {
       backdrob: true,
       backdropClass: 'dark-overlay',
       closeOnBackdropClick: true,
-      panelClass: 'create-project',
+      panelClass: ['create-item', 'projects'],
     });
   }
 }

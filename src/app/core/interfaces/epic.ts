@@ -8,3 +8,9 @@ export interface Epic {
   updatedAt: Date;
   deletedAt: Date;
 }
+
+export interface Epicpayload {
+  name: string;
+  description: string;
+  position?: number;
+}

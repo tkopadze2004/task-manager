@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="container__form-wrapper">
+    <h2 class="container__form-wrapper--title">Create Epic</h2>
+    <form [formGroup]="epicForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <mat-label>Epic Name</mat-label>
+        <input type="text" matInput formControlName="name" />
+        @if(epicForm.get('name')?.hasError('required')){
+        <mat-error> name is required </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Epic Description</mat-label>
+        <textarea matInput formControlName="description" required></textarea>
+        @if(epicForm.get('description')?.hasError('required')){
+        <mat-error> description is required </mat-error>
+        }
+      </mat-form-field>
+
+      <div class="container__actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="epicForm.invalid"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
