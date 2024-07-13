@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 100px 40px;
+  &__form-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    padding: 20px;
+    background-color: #b4bbd02c;
+    border: 1px solid #ccccccbb;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    &--title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  }
+
+  &__column-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  &__actions {
+    display: flex;
+    gap: 15px;
+  }
+}
+
+mat-form-field {
+  margin-bottom: 10px;
+  width: 500px;
+}

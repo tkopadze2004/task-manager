@@ -1,23 +1,43 @@
 import { Injectable, inject } from '@angular/core';
 import { ProjectService } from '../service/project.service';
-import { BehaviorSubject, Observable, map, shareReplay, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  filter,
+  map,
+  shareReplay,
+  switchMap,
+} from 'rxjs';
 import { Project } from '../core/interfaces/project';
+import { storageService } from '../core/services';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectFacade {
+  private storageService = inject(storageService);
   private projectService = inject(ProjectService);
 
   private projectSubject = new BehaviorSubject<null>(null);
-  private projectIdSubject = new BehaviorSubject(0);
+  private projectIdSubject = new BehaviorSubject<number | null>(
+    this.getStoredProjectId()
+  );
+  public projectId$ = this.projectIdSubject.asObservable();
 
-  private project$ = this.projectSubject.asObservable().pipe(
-    switchMap(() => this.projectService.getMyProjects()),
-    shareReplay(1)
+  public project$: Observable<Project[]> = this.projectSubject
+    .asObservable()
+    .pipe(
+      switchMap(() => this.projectService.getMyProjects()),
+      shareReplay(1)
+    );
+
+  public projectById$: Observable<Project> = this.projectId$.pipe(
+    filter((id) => id !== null),
+    switchMap((id: number | null) => this.getProjectById(id!))
   );
 
-  private projectById$ = this.projectIdSubject
-    .asObservable()
-    .pipe(switchMap((id: number) => this.getProjectById(id)));
+  private getStoredProjectId(): number | null {
+    const storedId = this.storageService.getItem('projectId');
+    return storedId !== null ? +storedId : null;
+  }
 
   public loadProjects() {
     this.projectSubject.next(null);
@@ -28,6 +48,8 @@ export class ProjectFacade {
   }
 
   public loadProjectById(id: number) {
+    this.storageService.setItem('projectId', id);
+
     this.projectIdSubject.next(id);
   }
 
@@ -38,6 +60,11 @@ export class ProjectFacade {
 
   createProject(project: Project): Observable<Project> {
     return this.projectService.createProject(project);
+  }
+
+  getProject(): Project {
+    const project = localStorage.getItem('project');
+    return project ? JSON.parse(project) : null;
   }
 
   getProjectById(id: number): Observable<Project> {

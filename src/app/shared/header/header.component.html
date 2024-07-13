@@ -24,8 +24,8 @@
               <h4>your projects</h4>
             </div>
             <ul>
-              @for(project of projects$ | async ;track project.id){
-              <li [routerLink]="['/home/mainContent/myProject', project.id]">
+              @for(project of projects$ | async ;track project){
+              <li (click)="getProjectById(project.id!)">
                 {{ project.name }}
               </li>
               }@empty {

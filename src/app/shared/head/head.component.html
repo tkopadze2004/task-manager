@@ -1,0 +1,13 @@
+<div class="header">
+  <div class="header__left">
+    @if(showImg()){
+    <img [src]="image()" />
+    }
+    <div class="header__title">{{ name() }}</div>
+  </div>
+  @if(showButton()){
+  <button mat-flat-button [routerLink]="buttonRoute"  (click)="buttonClick.emit()">
+    {{ button() }}
+  </button>
+  }
+</div>
