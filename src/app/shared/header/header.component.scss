@@ -151,12 +151,19 @@ header {
   flex-direction: column;
   gap: 20px;
   &__item {
+    display: flex;
+    align-items: center;
     color: #2f4081;
+    gap: 10px;
+
+    img {
+      width: 20px;
+    }
   }
 
   &__logout {
     cursor: pointer;
-    border-top: 1px solid grey;
+    // border-top: 1px solid grey;
     padding-top: 10px;
   }
 }
