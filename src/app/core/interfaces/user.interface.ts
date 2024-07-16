@@ -1,4 +1,5 @@
 import { Project } from './project';
+import { Role } from './role.interface';
 
 export interface User {
   id?: string;
@@ -9,7 +10,7 @@ export interface User {
   mobileNumber: string;
   isActive: boolean;
   userPermissions: string[];
-  roles: string[];
+  roles: Role[];
   projects: Project[];
 }
 

@@ -11,6 +11,8 @@ import { RouterLink } from '@angular/router';
 import { User, UserResponse } from '../../core/interfaces/user.interface';
 import { UsersService } from '../../service/users.service';
 import { tap } from 'rxjs';
+import { ModalService } from '../../core/modal/modal.service';
+import { SetRoleComponent } from './set-role/set-role.component';
 
 @Component({
   selector: 'app-users',
@@ -27,6 +29,7 @@ import { tap } from 'rxjs';
     MatPaginator,
     RouterLink,
     JsonPipe,
+
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
@@ -44,6 +47,7 @@ export class UsersComponent {
   private snackBar = inject(MatSnackBar);
   private userService = inject(UsersService);
   public users!: User[];
+  private modalref = inject(ModalService);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -65,6 +69,18 @@ export class UsersComponent {
 
       this.openSnackBar(' User deleted successfully!', 'Close');
       // this.isueTypeFacade.loadIssues();
+    });
+  }
+
+  setRole(user: User) {
+    this.modalref.open(SetRoleComponent, {
+      data: { user: user },
+      width: 24,
+      height: 300,
+      backdrob: true,
+      backdropClass: 'dark-overlay',
+      closeOnBackdropClick: true,
+      panelClass: ['create-item', 'board'],
     });
   }
   openSnackBar(message: string, action: string) {

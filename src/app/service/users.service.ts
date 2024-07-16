@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../core/services';
 import { Observable } from 'rxjs';
-import { UserPayload, UserResponse } from '../core/interfaces/user.interface';
+import {
+  User,
+  UserPayload,
+  UserResponse,
+} from '../core/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +22,15 @@ export class UsersService extends ApiService {
   createUser(payload: UserPayload) {
     return this.post('users', payload);
   }
-  getUser(id:number):Observable<UserPayload>{
-    return this.get<UserPayload>(`users/${id}`)
+  getUser(id: number): Observable<UserPayload> {
+    return this.get<UserPayload>(`users/${id}`);
   }
 
-  editUser(id:number,payload:UserPayload){
-    return this.put(`users/${id}`,payload)
+  editUser(id: number, payload: UserPayload) {
+    return this.put(`users/${id}`, payload);
+  }
+
+  setRole(params: { userId: number; roleIds: number[] }): Observable<User> {
+    return this.post<User>('users/roles', params);
   }
 }
