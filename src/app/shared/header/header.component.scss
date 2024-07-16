@@ -2,7 +2,7 @@ header {
   height: 40px;
   background-color: whitesmoke;
   border-bottom: 1px solid rgb(192, 189, 189);
-  padding: 7px 180px 9px;
+  padding: 7px 5px 9px 180px;
 
   .side {
     display: flex;
@@ -35,13 +35,8 @@ header {
     }
 
     &__left {
-      gap: 35px;
-      &--user {
-        img {
-          width: 23px;
-          cursor: pointer;
-        }
-      }
+      gap: 20px;
+
       &--projects {
         a {
           display: flex;
@@ -132,5 +127,36 @@ header {
       font-family: "Verdana", sans-serif;
       margin-bottom: 20px;
     }
+  }
+}
+.info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #122341;
+    font-weight: 400;
+    &--email {
+      font-size: 12px;
+    }
+  }
+}
+.container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  &__item {
+    color: #2f4081;
+  }
+
+  &__logout {
+    cursor: pointer;
+    border-top: 1px solid grey;
+    padding-top: 10px;
   }
 }

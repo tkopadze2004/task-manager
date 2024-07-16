@@ -1,0 +1,79 @@
+<form [formGroup]="userForm" class="user-form">
+  <h2>Create User</h2>
+  <div class="form-fields">
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          type="text"
+          id="firstName"
+          formControlName="firstName"
+        />
+        @if(userForm.get('firstName')?.hasError('required')){
+        <mat-error> firstName is required </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput type="text" id="lastName" formControlName="lastName" />
+        @if(userForm.get('lastName')?.hasError('required')){
+        <mat-error> lastName is required </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Identity Number</mat-label>
+        <input
+          matInput
+          type="text"
+          id="identityNumber"
+          formControlName="identityNumber"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" id="email" formControlName="email" />
+        @if(userForm.get('email')?.hasError('required')){
+        <mat-error> email is required </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <mat-form-field appearance="outline">
+        <mat-label>Mobile Number</mat-label>
+        <input
+          matInput
+          type="text"
+          id="mobileNumber"
+          formControlName="mobileNumber"
+        />
+        @if(userForm.get('mobileNumber')?.hasError('required')){
+        <mat-error> mobileNumber is required </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button mat-raised-button type="reset">Reset</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="userForm.invalid"
+      (click)="submit()"
+    >
+      Submit
+    </button>
+  </div>
+</form>

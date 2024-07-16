@@ -1,0 +1,89 @@
+$user-color-primary: #3498db;
+$user-color-secondary: #e74c3c;
+$user-color-border: #bdc3c7;
+$user-color-background: #ecf0f1;
+$user-color-text: #2c3e50;
+
+form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 570px;
+  margin: 10px auto;
+  padding: 20px;
+  font-family: "Roboto", sans-serif;
+
+  h2 {
+    color: $user-color-primary;
+    margin-bottom: 30px;
+  }
+
+  .form-fields {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-field {
+    width: 100%;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  input {
+    font-family: "Roboto", sans-serif;
+    width: 100%;
+  }
+
+  mat-error {
+    color: $user-color-secondary;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  .form-actions {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    button {
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+
+      &[type="submit"] {
+        background-color: $user-color-primary;
+        color: white;
+
+        &:disabled {
+          background-color: #ddd;
+          cursor: not-allowed;
+        }
+
+        &:not(:disabled):hover {
+          background-color: darken($user-color-primary, 10%);
+        }
+      }
+
+      &[type="reset"] {
+        background-color: $user-color-secondary;
+        color: white;
+
+        &:hover {
+          background-color: darken($user-color-secondary, 10%);
+        }
+      }
+    }
+  }
+}

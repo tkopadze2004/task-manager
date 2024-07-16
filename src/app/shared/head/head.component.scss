@@ -7,6 +7,7 @@
   justify-content: space-around;
   align-items: center;
   padding-bottom: 25px;
+  margin: 0 auto;
   &__title {
     font-size: 25px;
     color: rgba(42, 41, 41, 0.838);
@@ -27,7 +28,8 @@
     font-size: 15px;
     color: rgb(246, 246, 246);
     border-radius: 4px;
-    :hover{
-      color: white;}
+    :hover {
+      color: white;
+    }
   }
 }

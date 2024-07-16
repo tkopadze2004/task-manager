@@ -73,6 +73,23 @@ export const mainContentRoutes: Routes = [
           },
         ],
       },
-    ],
-  },
-];
+      // {
+      //   path: 'users',
+      //   children: [
+      //     {
+      //       path: '',
+      //       component: UsersComponent,
+          // },
+          // {
+          //   path: 'add',
+          //   component: CreateEditEpicComponent,
+          // },
+          // {
+          //   path: 'edit/:id',
+          //   component: CreateEditEpicComponent,
+          // },
+        ],
+      },
+    ]
+//   },
+// ];

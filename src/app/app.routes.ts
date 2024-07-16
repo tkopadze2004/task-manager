@@ -2,7 +2,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { authGuard } from './core/guards/auth.guard';
-
+import { UsersComponent } from './pages/users/users.component';
+import { CreateEditUserComponent } from './pages/users/create-edit-user/create-edit-user.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,24 @@ export const routes: Routes = [
           import('./pages/project/main-content/main-content-routes').then(
             (m) => m.mainContentRoutes
           ),
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            path: '',
+            component: UsersComponent,
+          },
+          {
+            path: 'add',
+            component: CreateEditUserComponent,
+          },
+          {
+            path: 'edit/:id',
+            component: CreateEditUserComponent,
+
+          }
+        ],
       },
     ],
   },
