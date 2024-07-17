@@ -14,8 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProjectFacade } from '../../../facade';
-import { UserFacade } from '../../../facade/user-facade';
+import { ProjectFacade, UserFacade } from '../../../facade';
 
 @Component({
   selector: 'app-add-user',
@@ -32,10 +31,10 @@ import { UserFacade } from '../../../facade/user-facade';
   styleUrl: './add-user.component.scss',
 })
 export class AddUserComponent implements OnInit, OnDestroy {
-  private userFacade = inject(UserFacade);
+  private readonly userFacade = inject(UserFacade);
+  private readonly projectFacade = inject(ProjectFacade);
   private modalRef = inject(ModalRef);
   private sub$ = new Subject();
-  private projectFacade = inject(ProjectFacade);
 
   @Inject(MAT_DIALOG_DATA) public data?: { user: User[] };
 

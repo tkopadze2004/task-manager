@@ -1,6 +1,6 @@
 import { Component, Inject, inject, OnDestroy, OnInit } from '@angular/core';
 import { RoleService } from '../../../service/role.service';
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {
@@ -33,9 +33,9 @@ import { UsersService } from '../../../service/users.service';
   styleUrl: './set-role.component.scss',
 })
 export class SetRoleComponent implements OnInit, OnDestroy {
-  private roleService = inject(RoleService);
+  private readonly roleService = inject(RoleService);
+  private readonly usersService = inject(UsersService);
   private modalRef = inject(ModalRef);
-  private usersService = inject(UsersService);
   private sub$ = new Subject();
   private userId: number = 0;
   @Inject(MAT_DIALOG_DATA) public data?: { user: User };

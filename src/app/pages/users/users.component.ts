@@ -9,11 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterLink } from '@angular/router';
 import { User, UserResponse } from '../../core/interfaces/user.interface';
-import { UsersService } from '../../service/users.service';
 import { tap } from 'rxjs';
 import { ModalService } from '../../core/modal/modal.service';
 import { SetRoleComponent } from './set-role/set-role.component';
-import { UserFacade } from '../../facade/user-facade';
+import { UserFacade } from '../../facade';
 
 @Component({
   selector: 'app-users',
@@ -38,7 +37,7 @@ export class UsersComponent {
   private snackBar = inject(MatSnackBar);
   public users!: User[];
   private modalref = inject(ModalService);
-  private userFacade=inject(UserFacade)
+  private readonly userFacade=inject(UserFacade)
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

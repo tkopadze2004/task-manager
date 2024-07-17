@@ -14,8 +14,8 @@ import { User } from '../core/interfaces/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectFacade {
-  private storageService = inject(storageService);
-  private projectService = inject(ProjectService);
+  private readonly storageService = inject(storageService);
+  private readonly projectService = inject(ProjectService);
 
   private userSubject = new BehaviorSubject<null>(null);
   private projectSubject = new BehaviorSubject<null>(null);

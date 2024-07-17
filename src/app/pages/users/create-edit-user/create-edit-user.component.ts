@@ -43,12 +43,12 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './create-edit-user.component.scss',
 })
 export class CreateEditUserComponent {
-  userService = inject(UsersService);
+  private readonly userService = inject(UsersService);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
   private sub$ = new Subject();
   private id!: number;
-  route = inject(ActivatedRoute);
+  private route = inject(ActivatedRoute);
 
   userForm = new FormGroup({
     id: new FormControl(),

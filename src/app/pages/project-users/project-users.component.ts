@@ -1,5 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { ProjectService } from '../../service/project.service';
+import { Component, inject, ViewChild } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { HeadComponent } from '../../shared/head/head.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -12,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ModalService } from '../../core/modal/modal.service';
 import { AddUserComponent } from './add-user/add-user.component';
-import { Project } from '../../core/interfaces/project';
 import { ProjectFacade } from '../../facade';
 
 @Component({
@@ -32,7 +30,7 @@ import { ProjectFacade } from '../../facade';
   styleUrl: './project-users.component.scss',
 })
 export class ProjectUsersComponent {
-  private projectFacade = inject(ProjectFacade);
+  private readonly projectFacade = inject(ProjectFacade);
   private snackBar = inject(MatSnackBar);
   private users: User[] = [];
   private modalRef = inject(ModalService);

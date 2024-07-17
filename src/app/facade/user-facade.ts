@@ -5,7 +5,7 @@ import { UserResponse } from '../core/interfaces/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UserFacade {
-  private userService = inject(UsersService);
+  private readonly userService = inject(UsersService);
   private userSubject = new BehaviorSubject<number | null>(null);
 
   private users$ = this.userSubject
