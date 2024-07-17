@@ -3,7 +3,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { HeadComponent } from '../../shared/head/head.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,7 @@ import { UsersService } from '../../service/users.service';
 import { tap } from 'rxjs';
 import { ModalService } from '../../core/modal/modal.service';
 import { SetRoleComponent } from './set-role/set-role.component';
+import { UserFacade } from '../../facade/user-facade';
 
 @Component({
   selector: 'app-users',
@@ -28,13 +29,19 @@ import { SetRoleComponent } from './set-role/set-role.component';
     MatSortModule,
     MatPaginator,
     RouterLink,
-    JsonPipe,
-
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
 export class UsersComponent {
+  public dataSource = new MatTableDataSource<User>();
+  private snackBar = inject(MatSnackBar);
+  public users!: User[];
+  private modalref = inject(ModalService);
+  private userFacade=inject(UserFacade)
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   public displayedColumns: string[] = [
     'id',
     'firstName',
@@ -43,32 +50,20 @@ export class UsersComponent {
     'createdAt',
     'actions',
   ];
-  public dataSource = new MatTableDataSource<User>();
-  private snackBar = inject(MatSnackBar);
-  private userService = inject(UsersService);
-  public users!: User[];
-  private modalref = inject(ModalService);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  public users$ = this.userService.getUsers().pipe(
+  public users$ = this.userFacade.GetUsers().pipe(
     tap((data: UserResponse) => {
       this.users = data.data;
-      console.log(data);
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      console.log(this.users);
     })
   );
 
   delete(userId: number) {
-    this.userService.deleteUser(userId).subscribe(() => {
-      console.log(userId);
-
+    this.userFacade.deleteUser(userId).subscribe(() => {
       this.openSnackBar(' User deleted successfully!', 'Close');
-      // this.isueTypeFacade.loadIssues();
+      this.userFacade.loadUsers();
     });
   }
 

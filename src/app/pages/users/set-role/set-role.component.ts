@@ -27,7 +27,6 @@ import { UsersService } from '../../../service/users.service';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    NgFor,
     MatButtonModule,
   ],
   templateUrl: './set-role.component.html',
@@ -36,7 +35,7 @@ import { UsersService } from '../../../service/users.service';
 export class SetRoleComponent implements OnInit, OnDestroy {
   private roleService = inject(RoleService);
   private modalRef = inject(ModalRef);
-  private userService = inject(UsersService);
+  private usersService = inject(UsersService);
   private sub$ = new Subject();
   private userId: number = 0;
   @Inject(MAT_DIALOG_DATA) public data?: { user: User };
@@ -62,7 +61,7 @@ export class SetRoleComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.userService
+    this.usersService
       .setRole({
         userId: this.userId,
         roleIds: this.roleForm.controls['roles'].value,

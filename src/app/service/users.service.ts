@@ -15,6 +15,10 @@ export class UsersService extends ApiService {
     return this.get<UserResponse>('users');
   }
 
+  getUsersArray():Observable<User[]>{
+    return this.get<User[]>('users/all');
+
+  }
   deleteUser(UserId: number) {
     return this.delete(`users/${UserId}`);
   }

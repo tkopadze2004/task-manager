@@ -1,0 +1,21 @@
+<div class="close" (click)="close()">
+  <img src="/images/close.svg" />
+</div>
+<div>
+  <h4>Assign one or more users to this project</h4>
+  <form [formGroup]="userForm">
+    <mat-form-field>
+      <mat-label>Users</mat-label>
+      <mat-select formControlName="userId" multiple>
+        @for (user of users$ | async; track user) {
+        <mat-option [value]="user.id">
+          {{ user.firstName }} {{ user.lastName }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <div mat-dialog-actions class="actions">
+    <button mat-button (click)="submit()">Submit</button>
+  </div>
+</div>

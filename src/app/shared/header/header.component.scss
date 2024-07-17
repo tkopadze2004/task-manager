@@ -151,10 +151,11 @@ header {
   flex-direction: column;
   gap: 20px;
   &__item {
+    cursor: pointer;
     display: flex;
     align-items: center;
     color: #2f4081;
-    gap: 10px;
+    gap: 7px;
 
     img {
       width: 20px;
@@ -163,7 +164,6 @@ header {
 
   &__logout {
     cursor: pointer;
-    // border-top: 1px solid grey;
     padding-top: 10px;
   }
 }
