@@ -27,7 +27,7 @@ import { Board, BoardColumn } from '../../../../core/interfaces/board';
 import { TaskService } from '../../../../service/task.service';
 import { TaskFacade } from '../../../../facade/task.facade';
 import { ModalService } from '../../../../core/modal/modal.service';
-import { AddTaskComponent } from '../../add-task/add-task.component';
+import { AddTaskComponent } from '../add-task/add-task.component';
 @Component({
   selector: 'app-board-info',
   standalone: true,

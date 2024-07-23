@@ -11,14 +11,14 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { IssueTypeFacade } from '../../../facade/issue-type.facade';
+import { IssueTypeFacade } from '../../../../facade/issue-type.facade';
 import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { EpicFacade } from '../../../facade/epic.facade';
-import { UsersService } from '../../../service/users.service';
-import { TaskService } from '../../../service/task.service';
-import { TaskStatus } from '../../../core/enums/task-status';
-import { ModalRef } from '../../../core/modal/modal.ref';
+import { EpicFacade } from '../../../../facade/epic.facade';
+import { UsersService } from '../../../../service/users.service';
+import { TaskService } from '../../../../service/task.service';
+import { TaskStatus } from '../../../../core/enums/task-status';
+import { ModalRef } from '../../../../core/modal/modal.ref';
 
 @Component({
   selector: 'app-add-task',
@@ -80,9 +80,9 @@ export class AddTaskComponent implements OnInit {
       console.log(this.modalRef.data.boardId);
     }
   }
-close(){
-  this.modalRef.close()
-}
+  close() {
+    this.modalRef.close();
+  }
   save() {
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
@@ -94,12 +94,12 @@ close(){
       description: string;
       issueTypeId: number;
       epicId: number;
-      priority:string[],
+      priority: string[];
       boardId: number;
-      isBacklog:boolean
+      isBacklog: boolean;
       boardColumnId: number;
       taskStatus: TaskStatus.ToDo;
-      taskProperty:string[]
+      taskProperty: string[];
       assigneeId: number;
       reporterId: number;
     };
