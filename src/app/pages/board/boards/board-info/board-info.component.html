@@ -12,7 +12,12 @@
     </div>
   </div>
 </div>
-<div>
+<div class="add-task" (click)="addTask()">
+  <img src="/images/plus-sign.png" width="20px" />
+  <span>add task</span>
+</div>
+<div class="tasks-container">
+
   <div class="columns-container" cdkDropListGroup>
     @for (column of board.columns; track column) {
     <div

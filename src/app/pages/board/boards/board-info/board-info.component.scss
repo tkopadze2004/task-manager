@@ -60,16 +60,24 @@
   }
 }
 
-.task.done {
+.done {
   text-decoration: line-through;
   background: rgba(109, 142, 176, 0.47);
 }
-
 .add-task {
   margin-top: 10px;
-  text-align: end;
-  margin: 20px 10px 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: auto;
+  max-width: 100px;
+  gap: 7px;
+  margin: 20px 10px 10px auto;
   cursor: pointer;
+  :hover {
+    text-decoration: underline rgba(0, 0, 0, 0.586);
+    font-size: 17px;
+  }
 }
 
 .card {

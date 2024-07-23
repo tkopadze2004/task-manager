@@ -26,6 +26,8 @@ import { Task } from '../../../../core/interfaces/task.interface';
 import { Board, BoardColumn } from '../../../../core/interfaces/board';
 import { TaskService } from '../../../../service/task.service';
 import { TaskFacade } from '../../../../facade/task.facade';
+import { ModalService } from '../../../../core/modal/modal.service';
+import { AddTaskComponent } from '../../add-task/add-task.component';
 @Component({
   selector: 'app-board-info',
   standalone: true,
@@ -50,6 +52,7 @@ export class BoardInfoComponent implements OnDestroy {
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
   private taskFacade = inject(TaskFacade);
+  private readonly modalservice = inject(ModalService);
   boardId!: number;
   sub$ = new Subject();
   tasks: Task[] = [];
@@ -92,7 +95,19 @@ export class BoardInfoComponent implements OnDestroy {
         this.assignTasksToColumns();
       });
   }
-
+  addTask() {
+    this.modalservice.open(AddTaskComponent, {
+      data: { boardId: this.boardId, toDoColumnId: this.toDoColumnId },
+      width: 65,
+      height: 705,
+      backdrob: true,
+      backdropClass: 'dark-overlay',
+      closeOnBackdropClick: true,
+      panelClass: ['create-item', 'projects'],
+    });
+    console.log(this.boardId);
+    console.log(this.toDoColumnId);
+  }
   deleteTask(id: number) {
     this.taskFacade.deleteTask(id).subscribe();
   }
