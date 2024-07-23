@@ -1,8 +1,15 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { boardFacade } from '../../../../facade/board.facade';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, switchMap, takeUntil } from 'rxjs';
-import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import {
+  Observable,
+  shareReplay,
+  Subject,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs';
+import { AsyncPipe, DatePipe, JsonPipe, NgClass } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -15,6 +22,10 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { Task } from '../../../../core/interfaces/task.interface';
+import { Board, BoardColumn } from '../../../../core/interfaces/board';
+import { TaskService } from '../../../../service/task.service';
+import { TaskFacade } from '../../../../facade/task.facade';
 @Component({
   selector: 'app-board-info',
   standalone: true,
@@ -30,6 +41,7 @@ import {
     CdkDrag,
     CdkDragPlaceholder,
     CdkDragPreview,
+    NgClass,
   ],
 })
 export class BoardInfoComponent implements OnDestroy {
@@ -37,25 +49,61 @@ export class BoardInfoComponent implements OnDestroy {
   private route = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
+  private taskFacade = inject(TaskFacade);
   boardId!: number;
   sub$ = new Subject();
+  tasks: Task[] = [];
+  columns: { [key: number]: Task[] } = {};
+  board$!: Observable<Board>;
+  toDoColumnId!: number;
 
-  tasks = [
-    { name: 'task for first' },
-    { name: 'task for second' },
-    { name: 'task for third' },
-    { name: 'task for first' },
-    { name: 'task for second' },
-    { name: 'task for third' },
-  ];
+  ngOnInit() {
+    const params$ = this.route.params.pipe(
+      tap((params) => {
+        this.boardId = Number(params['boardId']);
+      })
+    );
 
-  board$ = this.route.params.pipe(
-    switchMap((params) => {
-      const boardId = Number(params['boardId']);
-      this.boardId = boardId;
-      return this.boardFacade.getBoardById(boardId);
-    })
-  );
+    this.board$ = params$
+      .pipe(
+        switchMap(() => this.boardFacade.getBoardById(this.boardId)),
+        shareReplay()
+      )
+      .pipe(
+        tap((res) => {
+          this.columns = res.columns.reduce((acc: any, column: BoardColumn) => {
+            acc[column.id] = [];
+            if (column.name === 'To-Do') {
+              this.toDoColumnId = column.id;
+            }
+            return acc;
+          }, {});
+          this.getTask();
+        })
+      );
+  }
+
+  getTask() {
+    this.taskFacade
+      .getTasks({ boardId: this.boardId })
+      .pipe(takeUntil(this.sub$))
+      .subscribe((tasks: Task[]) => {
+        this.tasks = tasks;
+        this.assignTasksToColumns();
+      });
+  }
+
+  deleteTask(id: number) {
+    this.taskFacade.deleteTask(id).subscribe();
+  }
+  assignTasksToColumns() {
+    this.tasks.forEach((task) => {
+      const columnId = task.boardColumnId;
+      if (columnId) {
+        this.columns[columnId].push(task);
+      }
+    });
+  }
 
   delete(boardId: number) {
     this.boardFacade
@@ -70,10 +118,7 @@ export class BoardInfoComponent implements OnDestroy {
       });
   }
 
-  drop($event: CdkDragDrop<any[], any, any>) {
-    console.log($event.previousContainer.data.length);
-
-    console.log($event);
+  drop($event: CdkDragDrop<Task[]>, column: BoardColumn) {
     if ($event.previousContainer === $event.container) {
       moveItemInArray(
         $event.container.data,
@@ -88,6 +133,14 @@ export class BoardInfoComponent implements OnDestroy {
         $event.currentIndex
       );
     }
+    const task = $event.container.data[$event.currentIndex];
+    task.boardColumnId = column.id;
+    task.taskStatus = column.taskStatus;
+
+    this.taskFacade
+      .updateTask(task.id!, task)
+      .pipe(takeUntil(this.sub$))
+      .subscribe();
   }
 
   openSnackBar(message: string, action: string) {
