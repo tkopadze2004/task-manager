@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnDestroy, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -16,9 +16,12 @@ import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { EpicFacade } from '../../../../facade/epic.facade';
 import { UsersService } from '../../../../service/users.service';
-import { TaskService } from '../../../../service/task.service';
 import { TaskStatus } from '../../../../core/enums/task-status';
 import { ModalRef } from '../../../../core/modal/modal.ref';
+import { TaskFacade } from '../../../../facade/task.facade';
+import { Subject, takeUntil } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserFacade } from '../../../../facade';
 
 @Component({
   selector: 'app-add-task',
@@ -37,16 +40,22 @@ import { ModalRef } from '../../../../core/modal/modal.ref';
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss'],
 })
-export class AddTaskComponent implements OnInit {
-  issueservice = inject(IssueTypeFacade);
-  epicfacade = inject(EpicFacade);
-  userservice = inject(UsersService);
-  taskService = inject(TaskService);
+export class AddTaskComponent implements OnInit, OnDestroy {
+  private readonly issueTypeFacade = inject(IssueTypeFacade);
+  private readonly epicfacade = inject(EpicFacade);
+  private readonly userFacade = inject(UserFacade);
+  private readonly taskFacade = inject(TaskFacade);
+  private snackBar = inject(MatSnackBar);
   private modalRef = inject(ModalRef);
+  private sub$ = new Subject();
+  public isues$ = this.issueTypeFacade.getIssueTypes();
+  public epics$ = this.epicfacade.getEpics();
+  public users$ = this.userFacade.getUsersArray();
 
-  isues$ = this.issueservice.getIssueTypes();
-  epics$ = this.epicfacade.getEpics();
-  users$ = this.userservice.getUsersArray();
+  @Inject(MAT_DIALOG_DATA) public data?: {
+    boardId: number;
+    toDoColumnId: number;
+  };
 
   taskForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -65,11 +74,8 @@ export class AddTaskComponent implements OnInit {
     assigneeId: new FormControl<number | null>(null, Validators.required),
     reporterId: new FormControl<number | null>(null, Validators.required),
   });
-
-  @Inject(MAT_DIALOG_DATA) public data?: {
-    boardId: number;
-    toDoColumnId: number;
-  };
+  boardId: number = this.modalRef.data.boardId;
+  toDoColumnId = this.modalRef.data.toDoColumnId;
 
   ngOnInit(): void {
     if (this.modalRef.data?.boardId && this.modalRef.data?.toDoColumnId) {
@@ -77,16 +83,14 @@ export class AddTaskComponent implements OnInit {
         boardId: this.modalRef.data.boardId,
         boardColumnId: this.modalRef.data.toDoColumnId,
       });
-      console.log(this.modalRef.data.boardId);
     }
   }
-  close() {
+  public close() {
     this.modalRef.close();
   }
   save() {
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
-
       return;
     }
     const payload = this.taskForm.value as unknown as {
@@ -104,6 +108,25 @@ export class AddTaskComponent implements OnInit {
       reporterId: number;
     };
 
-    this.taskService.createTask(payload).subscribe((res) => console.log(res));
+    this.taskFacade
+      .createTask(payload)
+      .pipe(takeUntil(this.sub$))
+      .subscribe(() => {
+        this.taskForm.reset();
+        this.modalRef.close();
+        this.openSnackBar('Task created successfully!', 'Close');
+        this.taskFacade.GetTaskss(this.boardId);
+        console.log(this.modalRef.data.boardId);
+      });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.sub$.next(null), this.sub$.complete();
   }
 }

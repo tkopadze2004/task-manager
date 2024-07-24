@@ -1,33 +1,33 @@
-form{
+form {
   display: flex;
   flex-direction: column;
-
 }
-mat-form-field{
+mat-form-field {
   width: 450px;
 }
-.description{
+.description {
   min-height: 80px;
-  max-height: 80px ;
+  max-height: 80px;
   margin-bottom: 30px;
 }
-.cont{
+.cont {
   display: flex;
   flex-direction: row;
 }
-button {
+.create {
   width: 100%;
+  font-size: 16px;
 }
 
-h1{
+h1 {
   margin-top: 0;
   text-align: center;
 }
 .close {
   img {
     position: absolute;
-    top: 40px;
-    right: 420px;
+    top: 30px;
+    right: 300px;
     cursor: pointer;
   }
 }

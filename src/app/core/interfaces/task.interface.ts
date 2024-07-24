@@ -38,7 +38,7 @@ export interface TaskPayload {
   name: string;
   description: string;
   issueTypeId: number;
-  taskProperty: any; // Adjust this type based on your needs
+  taskProperty: unknown;
   epicId: number;
   boardId: number;
   boardColumnId: number;
