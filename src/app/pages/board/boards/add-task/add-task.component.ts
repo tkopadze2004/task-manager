@@ -15,13 +15,12 @@ import { IssueTypeFacade } from '../../../../facade/issue-type.facade';
 import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { EpicFacade } from '../../../../facade/epic.facade';
-import { UsersService } from '../../../../service/users.service';
 import { TaskStatus } from '../../../../core/enums/task-status';
 import { ModalRef } from '../../../../core/modal/modal.ref';
-import { TaskFacade } from '../../../../facade/task.facade';
 import { Subject, takeUntil } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserFacade } from '../../../../facade';
+import { TaskService } from '../../../../service/task.service';
 
 @Component({
   selector: 'app-add-task',
@@ -44,7 +43,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
   private readonly issueTypeFacade = inject(IssueTypeFacade);
   private readonly epicfacade = inject(EpicFacade);
   private readonly userFacade = inject(UserFacade);
-  private readonly taskFacade = inject(TaskFacade);
+  private readonly taskService = inject(TaskService);
   private snackBar = inject(MatSnackBar);
   private modalRef = inject(ModalRef);
   private sub$ = new Subject();
@@ -108,15 +107,13 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       reporterId: number;
     };
 
-    this.taskFacade
+    this.taskService
       .createTask(payload)
       .pipe(takeUntil(this.sub$))
-      .subscribe(() => {
+      .subscribe((result) => {
         this.taskForm.reset();
-        this.modalRef.close();
+        this.modalRef.close(result);
         this.openSnackBar('Task created successfully!', 'Close');
-        this.taskFacade.GetTaskss(this.boardId);
-        console.log(this.modalRef.data.boardId);
       });
   }
 

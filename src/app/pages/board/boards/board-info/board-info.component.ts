@@ -24,10 +24,9 @@ import {
 } from '@angular/cdk/drag-drop';
 import { Task } from '../../../../core/interfaces/task.interface';
 import { Board, BoardColumn } from '../../../../core/interfaces/board';
-import { TaskService } from '../../../../service/task.service';
-import { TaskFacade } from '../../../../facade/task.facade';
 import { ModalService } from '../../../../core/modal/modal.service';
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { TaskService } from '../../../../service/task.service';
 @Component({
   selector: 'app-board-info',
   standalone: true,
@@ -51,14 +50,14 @@ export class BoardInfoComponent implements OnDestroy {
   private route = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
-  private taskFacade = inject(TaskFacade);
+  private taskService = inject(TaskService);
   private readonly modalservice = inject(ModalService);
-  boardId!: number;
-  sub$ = new Subject();
-  tasks: Task[] = [];
-  columns: { [key: number]: Task[] } = {};
-  board$!: Observable<Board>;
-  toDoColumnId!: number;
+  private boardId!: number;
+  private sub$ = new Subject();
+  private tasks: Task[] = [];
+  public columns: { [key: number]: Task[] } = {};
+  public board$!: Observable<Board>;
+  public toDoColumnId!: number;
 
   ngOnInit() {
     const params$ = this.route.params.pipe(
@@ -74,44 +73,70 @@ export class BoardInfoComponent implements OnDestroy {
       )
       .pipe(
         tap((res) => {
-          this.columns = res.columns.reduce((acc: any, column: BoardColumn) => {
-            acc[column.id] = [];
-            if (column.name === 'To-Do') {
-              this.toDoColumnId = column.id;
-            }
-            return acc;
-          }, {});
+          this.columns = res.columns.reduce(
+            (acc: { [key: number]: Task[] }, column: BoardColumn) => {
+              acc[column.id] = [];
+              if (column.name === 'To-Do') {
+                this.toDoColumnId = column.id;
+              }
+              return acc;
+            },
+            {}
+          );
           this.getTask();
         })
       );
   }
 
-  getTask() {
-    this.taskFacade
-      .getTasks({ boardId: this.boardId })
+  private getTask() {
+    this.taskService
+      .getTasks(this.boardId)
       .pipe(takeUntil(this.sub$))
       .subscribe((tasks: Task[]) => {
         this.tasks = tasks;
         this.assignTasksToColumns();
       });
   }
-  addTask() {
-    this.modalservice.open(AddTaskComponent, {
+  public addTask() {
+    const dialogRef = this.modalservice.open(AddTaskComponent, {
       data: { boardId: this.boardId, toDoColumnId: this.toDoColumnId },
       width: 65,
       height: 705,
       backdrob: true,
       backdropClass: 'dark-overlay',
-      closeOnBackdropClick: true,
+      closeOnBackdropClick: false,
       panelClass: ['create-item', 'projects'],
     });
-    console.log(this.boardId);
-    console.log(this.toDoColumnId);
+
+    dialogRef.afterClose$.pipe(takeUntil(this.sub$)).subscribe((result) => {
+      const taskResult = result as Task | null;
+      if (taskResult) {
+        if (taskResult.boardColumnId !== undefined) {
+          this.columns[taskResult.boardColumnId].push(taskResult);
+          this.openSnackBar('Task added successfully!', 'Close');
+        }
+      }
+    });
   }
-  deleteTask(id: number) {
-    this.taskFacade.deleteTask(id).subscribe();
+
+  public deleteTask(id: number) {
+    this.taskService.deleteTask(id).subscribe(() => {
+      this.removeTaskFromColumns(id);
+    });
   }
-  assignTasksToColumns() {
+  private removeTaskFromColumns(taskId: number) {
+    for (const columnId in this.columns) {
+      const taskIndex = this.columns[columnId].findIndex(
+        (task) => task.id === taskId
+      );
+      if (taskIndex !== -1) {
+        this.columns[columnId].splice(taskIndex, 1);
+        break;
+      }
+    }
+  }
+
+  private assignTasksToColumns() {
     this.tasks.forEach((task) => {
       const columnId = task.boardColumnId;
       if (columnId) {
@@ -120,20 +145,17 @@ export class BoardInfoComponent implements OnDestroy {
     });
   }
 
-  delete(boardId: number) {
-    this.boardFacade
-      .deleteBoard(boardId)
-      .pipe(takeUntil(this.sub$))
-      .subscribe(() => {
-        this.openSnackBar('Board deleted successfully!', 'Close');
-        this.boardFacade.loadBoards();
-        setTimeout(() => {
-          this.router.navigate(['/home/mainContent/boards']);
-        }, 3000);
-      });
+  public delete(boardId: number) {
+    this.boardFacade.deleteBoard(boardId).subscribe(() => {
+      this.openSnackBar('Board deleted successfully!', 'Close');
+      this.boardFacade.loadBoards();
+      setTimeout(() => {
+        this.router.navigate(['/home/mainContent/boards']);
+      }, 3000);
+    });
   }
 
-  drop($event: CdkDragDrop<Task[]>, column: BoardColumn) {
+  public drop($event: CdkDragDrop<Task[]>, column: BoardColumn) {
     if ($event.previousContainer === $event.container) {
       moveItemInArray(
         $event.container.data,
@@ -152,13 +174,13 @@ export class BoardInfoComponent implements OnDestroy {
     task.boardColumnId = column.id;
     task.taskStatus = column.taskStatus;
 
-    this.taskFacade
+    this.taskService
       .updateTask(task.id!, task)
       .pipe(takeUntil(this.sub$))
       .subscribe();
   }
 
-  openSnackBar(message: string, action: string) {
+  private openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 5000,
     });

@@ -7,20 +7,19 @@ import { Task, TaskPayload } from '../core/interfaces/task.interface';
   providedIn: 'root',
 })
 export class TaskService extends ApiService {
-  getTasks(params: { boardId: number }): Observable<Task[]> {
-    return this.get<Task[]>(`task`, params);
+  getTasks(boardId: number): Observable<Task[]> {
+    return this.get<Task[]>(`task`, { boardId });
   }
 
-  updateTask(id:number,updatedTask: Task):Observable<Task>{
-    return this.put<Task>(`task/${id}`,updatedTask)
+  updateTask(id: number, updatedTask: Task): Observable<Task> {
+    return this.put<Task>(`task/${id}`, updatedTask);
   }
 
-  deleteTask(id:number):Observable<Task>{
-    return this.delete<Task>(`task/${id}`)
+  deleteTask(id: number): Observable<Task> {
+    return this.delete<Task>(`task/${id}`);
   }
 
-  createTask(taskPayload:TaskPayload):Observable<Task>{
-    return this.post<Task>('task',taskPayload)
+  createTask(taskPayload: TaskPayload): Observable<Task> {
+    return this.post<Task>('task', taskPayload);
   }
-
 }

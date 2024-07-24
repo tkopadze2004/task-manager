@@ -17,7 +17,6 @@
   <span>add task</span>
 </div>
 <div class="tasks-container">
-
   <div class="columns-container" cdkDropListGroup>
     @for (column of board.columns; track column) {
     <div
@@ -37,11 +36,11 @@
           class="task"
           [ngClass]="{ done: task.taskStatus === 'Done' }"
           cdkDrag
-          [cdkDragData]="task"
+          [cdkDragData]="task.id"
         >
           <div class="card">
             <span>{{ task.name }}</span>
-            <div (click)="deleteTask(task.id!)">
+            <div (click)="deleteTask(task.id)">
               <img src="/images/delete.png" />
             </div>
           </div>
