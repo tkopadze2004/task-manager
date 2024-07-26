@@ -66,26 +66,23 @@ export class BoardInfoComponent implements OnDestroy {
       })
     );
 
-    this.board$ = params$
-      .pipe(
-        switchMap(() => this.boardFacade.getBoardById(this.boardId)),
-        shareReplay()
-      )
-      .pipe(
-        tap((res) => {
-          this.columns = res.columns.reduce(
-            (acc: { [key: number]: Task[] }, column: BoardColumn) => {
-              acc[column.id] = [];
-              if (column.name === 'To-Do') {
-                this.toDoColumnId = column.id;
-              }
-              return acc;
-            },
-            {}
-          );
-          this.getTask();
-        })
-      );
+    this.board$ = params$.pipe(
+      switchMap(() => this.boardFacade.getBoardById(this.boardId)),
+      shareReplay(),
+      tap((res) => {
+        this.columns = res.columns.reduce(
+          (acc: { [key: number]: Task[] }, column: BoardColumn) => {
+            acc[column.id] = [];
+            if (column.name === 'To-Do') {
+              this.toDoColumnId = column.id;
+            }
+            return acc;
+          },
+          {}
+        );
+        this.getTask();
+      })
+    );
   }
 
   private getTask() {
@@ -120,7 +117,7 @@ export class BoardInfoComponent implements OnDestroy {
   }
 
   public deleteTask(id: number) {
-    this.taskService.deleteTask(id).subscribe(() => {
+    this.taskService.deleteTask(id).pipe(takeUntil(this.sub$)).subscribe(() => {
       this.removeTaskFromColumns(id);
     });
   }
@@ -146,7 +143,7 @@ export class BoardInfoComponent implements OnDestroy {
   }
 
   public delete(boardId: number) {
-    this.boardFacade.deleteBoard(boardId).subscribe(() => {
+    this.boardFacade.deleteBoard(boardId).pipe(takeUntil(this.sub$)).subscribe(() => {
       this.openSnackBar('Board deleted successfully!', 'Close');
       this.boardFacade.loadBoards();
       setTimeout(() => {

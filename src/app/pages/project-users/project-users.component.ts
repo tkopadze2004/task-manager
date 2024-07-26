@@ -1,11 +1,11 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, ViewChild } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { HeadComponent } from '../../shared/head/head.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { User } from '../../core/interfaces/user.interface';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -29,10 +29,11 @@ import { ProjectFacade } from '../../facade';
   templateUrl: './project-users.component.html',
   styleUrl: './project-users.component.scss',
 })
-export class ProjectUsersComponent {
+export class ProjectUsersComponent implements OnDestroy {
   private readonly projectFacade = inject(ProjectFacade);
   private snackBar = inject(MatSnackBar);
   private users: User[] = [];
+  private sub$=new Subject()
   private modalRef = inject(ModalService);
 
   public users$ = this.projectFacade.getProjectUsers().pipe(
@@ -62,7 +63,7 @@ export class ProjectUsersComponent {
   }
 
   delete(userId: number) {
-    this.projectFacade.deleteProjectUser(userId).subscribe(() => {
+    this.projectFacade.deleteProjectUser(userId).pipe(takeUntil(this.sub$)).subscribe(() => {
       this.openSnackBar('User deleted  successfully!', 'Close');
       this.projectFacade.loadUsers();
     });
@@ -83,5 +84,9 @@ export class ProjectUsersComponent {
     this.snackBar.open(message, action, {
       duration: 5000,
     });
+  }
+  ngOnDestroy(): void {
+    this.sub$.next(null)
+    this.sub$.complete()
   }
 }

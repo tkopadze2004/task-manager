@@ -21,6 +21,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserFacade } from '../../../../facade';
 import { TaskService } from '../../../../service/task.service';
+import { TaskPayload } from '../../../../core/interfaces/task.interface';
 
 @Component({
   selector: 'app-add-task',
@@ -92,7 +93,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
       this.taskForm.markAllAsTouched();
       return;
     }
-    const payload = this.taskForm.value as unknown as {
+    const payload = this.taskForm.value as TaskPayload as {
       name: string;
       description: string;
       issueTypeId: number;

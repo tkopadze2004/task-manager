@@ -74,23 +74,6 @@ export const mainContentRoutes: Routes = [
           },
         ],
       },
-      {
-        path: 'users',
-        children: [
-          {
-            path: '',
-            component: ProjectUsersComponent,
-          },
-          {
-            path: 'add',
-            component: ProjectUsersComponent,
-          },
-          {
-            path: 'edit/:id',
-            component: ProjectUsersComponent,
-          },
-        ],
-      },
-    ]
+    ],
   },
 ];

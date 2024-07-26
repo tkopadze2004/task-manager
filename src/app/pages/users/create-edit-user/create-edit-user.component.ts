@@ -19,7 +19,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UsersService } from '../../../service/users.service';
-import { catchError, Subject, takeUntil, throwError } from 'rxjs';
+import {
+  catchError,
+  of,
+  Subject,
+  switchMap,
+  takeUntil,
+  throwError,
+} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -60,25 +67,32 @@ export class CreateEditUserComponent {
   });
 
   ngOnInit(): void {
-    this.route.params.pipe(takeUntil(this.sub$)).subscribe((params) => {
-      if ('id' in params) {
-        this.id = +params['id'];
-        this.userService
-          .getUser(this.id)
-          .pipe(takeUntil(this.sub$))
-          .subscribe((user) => {
-            this.userForm.patchValue({
-              id: user.id,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              identityNumber: user.identityNumber,
-              email: user.email,
-              mobileNumber: user.mobileNumber,
-            });
+    this.route.params
+      .pipe(
+        switchMap((params) => {
+          if ('id' in params) {
+            this.id = +params['id'];
+            return this.userService.getUser(this.id);
+          } else {
+            return of(null);
+          }
+        })
+      )
+      .pipe(takeUntil(this.sub$))
+      .subscribe((user) => {
+        if (user) {
+          this.userForm.patchValue({
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            identityNumber: user.identityNumber,
+            email: user.email,
+            mobileNumber: user.mobileNumber,
           });
-      }
-    });
+        }
+      });
   }
+
   submit() {
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();

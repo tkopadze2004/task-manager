@@ -29,21 +29,8 @@ export const routes: Routes = [
       },
       {
         path: 'users',
-        children: [
-          {
-            path: '',
-            component: UsersComponent,
-          },
-          {
-            path: 'add',
-            component: CreateEditUserComponent,
-          },
-          {
-            path: 'edit/:id',
-            component: CreateEditUserComponent,
-
-          }
-        ],
+        loadChildren: () =>
+          import('./pages/users/users.routes').then((m) => m.usersRoutes),
       },
     ],
   },
