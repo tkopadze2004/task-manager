@@ -8,7 +8,6 @@ import { IssueTypesComponent } from '../../issue-types/issue-types.component';
 import { CreateEditIssueTypeComponent } from '../../issue-types/create-edit-issue-type/create-edit-issue-type.component';
 import { EpicComponent } from '../../epic/epic.component';
 import { CreateEditEpicComponent } from '../../epic/create-edit-epic/create-edit-epic.component';
-import { ProjectUsersComponent } from '../../project-users/project-users.component';
 
 export const mainContentRoutes: Routes = [
   {
@@ -72,7 +71,13 @@ export const mainContentRoutes: Routes = [
             path: 'edit/:id',
             component: CreateEditEpicComponent,
           },
+
         ],
+      },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./project-users/project-users.routes').then((m) => m.projectUsersRoutes),
       },
     ],
   },

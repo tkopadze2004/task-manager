@@ -2,8 +2,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { authGuard } from './core/guards/auth.guard';
-import { UsersComponent } from './pages/users/users.component';
-import { CreateEditUserComponent } from './pages/users/create-edit-user/create-edit-user.component';
 
 export const routes: Routes = [
   {

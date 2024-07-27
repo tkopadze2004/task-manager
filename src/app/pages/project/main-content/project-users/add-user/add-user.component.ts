@@ -1,7 +1,6 @@
 import { Component, Inject, inject, OnDestroy, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { User } from '../../../core/interfaces/user.interface';
 import {
   FormControl,
   FormGroup,
@@ -9,12 +8,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ModalRef } from '../../../core/modal/modal.ref';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProjectFacade, UserFacade } from '../../../facade';
+import { ProjectFacade, UserFacade } from '../../../../../facade';
+import { ModalRef } from '../../../../../core/modal/modal.ref';
+import { User } from '../../../../../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-add-user',

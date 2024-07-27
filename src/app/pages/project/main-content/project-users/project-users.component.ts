@@ -1,17 +1,17 @@
 import { Component, inject, OnDestroy, ViewChild } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { HeadComponent } from '../../shared/head/head.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { User } from '../../core/interfaces/user.interface';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ModalService } from '../../core/modal/modal.service';
 import { AddUserComponent } from './add-user/add-user.component';
-import { ProjectFacade } from '../../facade';
+import { ProjectFacade } from '../../../../facade';
+import { User } from '../../../../core/interfaces/user.interface';
+import { ModalService } from '../../../../core/modal/modal.service';
+import { HeadComponent } from '../../../../shared/head/head.component';
 
 @Component({
   selector: 'app-project-users',

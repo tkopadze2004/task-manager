@@ -6,15 +6,13 @@ export const usersRoutes: Routes = [
   {
     path: '',
     component: UsersComponent,
-    children: [
-      {
-        path: 'add',
-        component: CreateEditUserComponent,
-      },
-      {
-        path: 'edit/:id',
-        component: CreateEditUserComponent,
-      },
-    ],
+  },
+  {
+    path: 'add',
+    component: CreateEditUserComponent,
+  },
+  {
+    path: 'edit/:id',
+    component: CreateEditUserComponent,
   },
 ];
