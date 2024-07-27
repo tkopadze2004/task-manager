@@ -57,9 +57,21 @@
             </div>
           </div>
           <div class="container">
-            <div class="container__item" [routerLink]="['/home/users']">
+            <div
+              class="container__item"
+              [routerLink]="['/home/users']"
+              routerLinkActive="active"
+            >
               <img src="/images/group.png" />
-              <div>Users</div>
+              <div class="container__item--description">Users</div>
+            </div>
+            <div
+              class="container__item"
+              [routerLink]="['/home/roles']"
+              routerLinkActive="active"
+            >
+              <img src="/images/roles.png" />
+              <div class="container__item--description">Roles</div>
             </div>
           </div>
           <div>

@@ -8,12 +8,6 @@ header {
     display: flex;
     justify-content: space-between;
 
-    &__right,
-    &__left {
-      display: flex;
-      align-items: center;
-    }
-
     &__right {
       &__logo {
         display: flex;
@@ -35,6 +29,8 @@ header {
     }
 
     &__left {
+      display: flex;
+      align-items: center;
       gap: 20px;
 
       &--projects {
@@ -146,24 +142,39 @@ header {
   }
 }
 .container {
-  margin-top: 20px;
+  margin: 20px 0 17px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   &__item {
     cursor: pointer;
     display: flex;
+    padding: 10px 9px;
     align-items: center;
     color: #2f4081;
     gap: 7px;
 
     img {
-      width: 20px;
+      width: 18px;
+    }
+
+    &--description {
+      width: 280px;
+      color: rgba(83, 83, 83, 0.926);
+    }
+
+    &:hover {
+      border-radius: 6px;
+      background-color: rgba(165, 165, 165, 0.338);
+      transition: background-color 0.4s ease, transform 0.6s ease;
     }
   }
 
   &__logout {
     cursor: pointer;
-    padding-top: 10px;
+    padding: 25px 0 0 10px;
+    color: rgba(0, 0, 0, 0.658);
+    font-size: 17px;
+    font-weight: 500;
+    border-top: 1px solid rgba(128, 128, 128, 0.46);
   }
 }
