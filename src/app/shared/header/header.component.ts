@@ -34,7 +34,7 @@ export class HeaderComponent {
 
   getProjectById(projectId: number): void {
     this.projectFacade.getProjectByid(projectId);
-    this.router.navigate(['/home/mainContent/myProject']);
+    this.router.navigate(['/home/sideBar/myProject']);
   }
   logout() {
     this.authFacade.logout();

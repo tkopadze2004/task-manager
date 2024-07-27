@@ -11,17 +11,18 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { IssueTypeFacade } from '../../../../facade/issue-type.facade';
 import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { EpicFacade } from '../../../../facade/epic.facade';
-import { TaskStatus } from '../../../../core/enums/task-status';
-import { ModalRef } from '../../../../core/modal/modal.ref';
 import { Subject, takeUntil } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserFacade } from '../../../../facade';
-import { TaskService } from '../../../../service/task.service';
-import { TaskPayload } from '../../../../core/interfaces/task.interface';
+import { IssueTypeFacade } from '../../../../../../facade/issue-type.facade';
+import { EpicFacade } from '../../../../../../facade/epic.facade';
+import { UserFacade } from '../../../../../../facade';
+import { TaskService } from '../../../../../../service/task.service';
+import { ModalRef } from '../../../../../../core/modal/modal.ref';
+import { TaskStatus } from '../../../../../../core/enums/task-status';
+import { TaskPayload } from '../../../../../../core/interfaces/task.interface';
+
 
 @Component({
   selector: 'app-add-task',

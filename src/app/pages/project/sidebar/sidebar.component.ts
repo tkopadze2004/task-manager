@@ -3,10 +3,10 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-main-content',
+  selector: 'app-sidebar',
   standalone: true,
   imports: [RouterLink, RouterOutlet, AsyncPipe, RouterLinkActive],
-  templateUrl: './main-content.component.html',
-  styleUrl: './main-content.component.scss',
+  templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.scss',
 })
-export class MainContentComponent {}
+export class SideBarComponent {}

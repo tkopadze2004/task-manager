@@ -1,18 +1,16 @@
 import { Routes } from '@angular/router';
-import { MainContentComponent } from './main-content.component';
 import { authGuard } from '../../../core/guards/auth.guard';
 import { MyProjectsComponent } from './my-projects/my-projects.component';
-import { BoardsComponent } from '../../board/boards/boards.component';
-import { BoardInfoComponent } from '../../board/boards/board-info/board-info.component';
 import { IssueTypesComponent } from '../../issue-types/issue-types.component';
 import { CreateEditIssueTypeComponent } from '../../issue-types/create-edit-issue-type/create-edit-issue-type.component';
 import { EpicComponent } from '../../epic/epic.component';
 import { CreateEditEpicComponent } from '../../epic/create-edit-epic/create-edit-epic.component';
+import { SideBarComponent } from './sidebar.component';
 
-export const mainContentRoutes: Routes = [
+export const sideBartRoutes: Routes = [
   {
     path: '',
-    component: MainContentComponent,
+    component: SideBarComponent,
     canActivate: [authGuard],
     children: [
       {
@@ -28,16 +26,8 @@ export const mainContentRoutes: Routes = [
       },
       {
         path: 'boards',
-        children: [
-          {
-            path: '',
-            component: BoardsComponent,
-          },
-          {
-            path: 'board/:boardId',
-            component: BoardInfoComponent,
-          },
-        ],
+        loadChildren: () =>
+          import('./board/board.routes').then((m) => m.boardRoutes),
       },
       {
         path: 'issue-types',
@@ -71,13 +61,14 @@ export const mainContentRoutes: Routes = [
             path: 'edit/:id',
             component: CreateEditEpicComponent,
           },
-
         ],
       },
       {
         path: 'users',
         loadChildren: () =>
-          import('./project-users/project-users.routes').then((m) => m.projectUsersRoutes),
+          import('./project-users/project-users.routes').then(
+            (m) => m.projectUsersRoutes
+          ),
       },
     ],
   },

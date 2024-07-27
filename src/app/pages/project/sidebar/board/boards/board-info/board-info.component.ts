@@ -1,5 +1,4 @@
 import { Component, inject, OnDestroy } from '@angular/core';
-import { boardFacade } from '../../../../facade/board.facade';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   Observable,
@@ -22,11 +21,13 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Task } from '../../../../core/interfaces/task.interface';
-import { Board, BoardColumn } from '../../../../core/interfaces/board';
-import { ModalService } from '../../../../core/modal/modal.service';
+
 import { AddTaskComponent } from '../add-task/add-task.component';
-import { TaskService } from '../../../../service/task.service';
+import { boardFacade } from '../../../../../../facade/board.facade';
+import { TaskService } from '../../../../../../service/task.service';
+import { ModalService } from '../../../../../../core/modal/modal.service';
+import { Task } from '../../../../../../core/interfaces/task.interface';
+import { Board, BoardColumn } from '../../../../../../core/interfaces/board';
 @Component({
   selector: 'app-board-info',
   standalone: true,
@@ -147,7 +148,7 @@ export class BoardInfoComponent implements OnDestroy {
       this.openSnackBar('Board deleted successfully!', 'Close');
       this.boardFacade.loadBoards();
       setTimeout(() => {
-        this.router.navigate(['/home/mainContent/boards']);
+        this.router.navigate(['/home/sideBar/boards']);
       }, 3000);
     });
   }

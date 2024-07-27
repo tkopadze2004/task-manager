@@ -9,13 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ModalRef } from '../../../core/modal/modal.ref';
-import { boardFacade } from '../../../facade/board.facade';
 import { Subject, catchError, takeUntil, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AsyncPipe } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ModalRef } from '../../../../../core/modal/modal.ref';
+import { boardFacade } from '../../../../../facade/board.facade';
 
 @Component({
   selector: 'app-create-board',
@@ -81,7 +81,7 @@ export class CreateBoardComponent implements OnDestroy {
         this.modalRef.close();
         const id = res.id;
         setTimeout(() => {
-          this.router.navigate(['/home/mainContent/boards', 'board', id]);
+          this.router.navigate(['/home/sideBar/boards', 'board', id]);
         }, 1000);
       });
   }

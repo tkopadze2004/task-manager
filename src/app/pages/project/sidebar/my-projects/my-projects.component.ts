@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { share, switchMap } from 'rxjs';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ProjectFacade } from '../../../../facade';
 import { ProjectItemComponent } from '../../../../shared/project-item/project-item.component';
 import { BoardItemComponent } from '../../../../shared/board-item/board-item.component';
