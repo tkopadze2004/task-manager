@@ -1,0 +1,56 @@
+@if(board$|async ; as board){
+<div class="board--container">
+  <div class="board--container__left">
+    <div class="board--container__left--title">{{ board.name }}</div>
+    <div class="board--container__left--created">
+      {{ board.createdAt | date : "MMM d/ y" }}
+    </div>
+  </div>
+  <div class="board--container__right">
+    <div class="board--container__right--button">
+      <button mat-raised-button (click)="delete(board.id)">Delete</button>
+    </div>
+  </div>
+</div>
+<div class="add-task" (click)="addTask()">
+  <img src="/images/plus-sign.png" width="20px" />
+  <span>add task</span>
+</div>
+<div class="tasks-container">
+  <div class="columns-container" cdkDropListGroup>
+    @for (column of board.columns; track column) {
+    <div
+      class="columns-container__item"
+      cdkDropList
+      [cdkDropListData]="columns[column.id]"
+      (cdkDropListDropped)="drop($event, column)"
+    >
+      <div class="columns-container__item--header">
+        <span class="columns-container__item--header--name">{{
+          column.name
+        }}</span>
+      </div>
+      <div class="tasks">
+        @for (task of columns[column.id]; track task) {
+        <div
+          class="task"
+          [ngClass]="{ done: task.taskStatus === 'Done' }"
+          cdkDrag
+          [cdkDragData]="task.id"
+        >
+          <div class="card">
+            <span>{{ task.name }}</span>
+            <div (click)="deleteTask(task.id)">
+              <img src="/images/delete.png" />
+            </div>
+          </div>
+          <div class="placeholder" *cdkDragPlaceholder></div>
+          <div class="preview" *cdkDragPreview>{{ task.name }}</div>
+        </div>
+        }
+      </div>
+    </div>
+    }
+  </div>
+</div>
+}

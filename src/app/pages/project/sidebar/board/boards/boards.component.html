@@ -1,0 +1,24 @@
+<div class="boards-container">
+  <app-head
+    name="Your project boards"
+    image="/images/user.png"
+    [showButton]="false"
+  />
+  <div class="board-item">
+    @for(board of boards$|async ; track board.id){
+    <app-board-item
+      [name]="board.name"
+      matTooltip="See details"
+      matTooltipClass="custom-tooltip"
+      matTooltipPosition="below"
+      matTooltipShowDelay="50"
+      [routerLink]="['/home/sideBar/boards', 'board', board.id]"
+    >
+    </app-board-item>
+    }
+    <div class="add-board" (click)="createBoard()">
+      <img src="/images/plus-sign.png" />
+      <span>Create new board </span>
+    </div>
+  </div>
+</div>

@@ -64,7 +64,7 @@ export class ProjectItemComponent implements OnDestroy {
           this.openSnackBar('Project deleted successfully!', 'Close');
           this.projectFacade.loadProjects();
           setTimeout(() => {
-            this.router.navigate(['/mainContent']);
+            this.router.navigate(['/sideBar']);
           }, 3000);
         });
     }

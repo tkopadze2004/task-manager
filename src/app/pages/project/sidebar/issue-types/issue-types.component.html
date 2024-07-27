@@ -1,0 +1,50 @@
+<div class="head">
+  <app-head
+    name="issue types"
+    button="add issue type"
+    [showImg]="false"
+    [buttonRoute]="['/home/sideBar/issue-types', 'add']"
+  />
+</div>
+
+<div class="mat-elevation-z8">
+  @if (issueTypes$|async ; as issues) {
+
+  <table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef>Created At</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.createdAt | date : "M/d/yy" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="actions">Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-button
+          [routerLink]="['/home/sideBar/issue-types', 'edit', element.id]"
+        >
+          Edit
+        </button>
+        <button mat-button (click)="delete(element.id)">Delete</button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  @if (issues.length===0) {
+  <h2 class="noissues">No Issue Types</h2>
+  } }
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+  </mat-paginator>
+</div>

@@ -36,8 +36,36 @@
         </ng-template>
       </div>
 
-      <div class="side__left--user">
-        <img src="/images/menu.png" />
+      <div class="side__left--menu">
+        <button mat-icon-button [matMenuTriggerFor]="sideBarMenu">
+          <mat-icon
+            class="large-icon"
+            fontIcon="widgets
+          "
+          ></mat-icon>
+        </button>
+        <mat-menu #sideBarMenu="matMenu" xPosition="before" class="custom-mat">
+          <div class="info">
+            <img src="/images/account.png" />
+            <div class="info__details">
+              <div>
+                {{ authFacade.user.firstName }} {{ authFacade.user.lastName }}
+              </div>
+              <div class="info__details--email">
+                {{ authFacade.user.email }}
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="container__item" [routerLink]="['/home/users']">
+              <img src="/images/group.png" />
+              <div>Users</div>
+            </div>
+          </div>
+          <div>
+            <div (click)="logout()" class="container__logout">Log out</div>
+          </div>
+        </mat-menu>
       </div>
     </div>
   </div>

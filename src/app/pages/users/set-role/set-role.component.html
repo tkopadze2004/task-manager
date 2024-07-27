@@ -1,0 +1,20 @@
+<div class="close" (click)="close()">
+  <img src="/images/close.svg" />
+</div>
+<div>
+  <h4>Set one or more roles to this user</h4>
+  <div mat-dialog-content [formGroup]="roleForm">
+    <mat-form-field>
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="roles" multiple>
+        @for (role of roles$ | async; track role) {
+        <mat-option [value]="role.id">
+          {{ role.name }} </mat-option
+        >}
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="actions">
+    <button mat-button (click)="submit()">Submit</button>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+.board--container {
+  border-bottom: 1px solid #051e4937;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  &__left {
+    width: 900px;
+    text-transform: capitalize;
+    padding: 0 0 10px 15px;
+    &--title {
+      font-size: 33px;
+      color: rgba(42, 41, 41, 0.9);
+      font-weight: 600;
+    }
+    &--created {
+      font-size: 14px;
+      font-style: italic;
+      color: rgb(175, 175, 175);
+      font-weight: 500;
+      margin-top: 6px;
+    }
+  }
+
+  &__right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.columns-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 15px;
+
+  &__item {
+    flex: 0 0 250px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f1f2f4;
+    padding: 17px;
+    min-height: 400px;
+
+    &--header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #cac9c9;
+      margin-bottom: 10px;
+
+      &--name {
+        font-weight: bold;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.done {
+  text-decoration: line-through;
+  background: rgba(109, 142, 176, 0.47);
+}
+.add-task {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: auto;
+  max-width: 100px;
+  gap: 7px;
+  margin: 20px 10px 10px auto;
+  cursor: pointer;
+  :hover {
+    text-decoration: underline rgba(0, 0, 0, 0.586);
+    font-size: 17px;
+  }
+}
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  img {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+}

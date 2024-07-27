@@ -1,0 +1,53 @@
+<div class="main-content">
+  <div class="main-content__left">
+    <ul class="main-content__left--menu">
+      <li
+        [routerLink]="['/home/sideBar/myProject']"
+        routerLinkActive="active"
+      >
+        <div class="side-menu__name">
+          <img src="/images/project.png" />
+        </div>
+        <div class="side-menu__name">Project</div>
+      </li>
+
+      <li [routerLink]="['/home/sideBar/boards']" routerLinkActive="active">
+        <div class="side-menu__name">
+          <img src="/images/boards.png" />
+        </div>
+        <div class="side-menu__name">Boards</div>
+      </li>
+      <li
+        routerLinkActive="active"
+        [routerLink]="['/home/sideBar/issue-types']"
+        routerLinkActive="active"
+      >
+        <div class="side-menu__name">
+          <img src="/images/issue.png" />
+        </div>
+        <div class="side-menu__name">Issue Types</div>
+      </li>
+      <li
+        routerLinkActive="active"
+        [routerLink]="['/home/sideBar/epics']"
+        routerLinkActive="active"
+      >
+        <div class="side-menu__name">
+          <img src="/images/epic.png" />
+        </div>
+        <div class="side-menu__name">Epics</div>
+      </li>
+      <li [routerLink]="['/home/sideBar/users']" routerLinkActive="active">
+        <div class="side-menu__name">
+          <img src="/images/users.svg" />
+        </div>
+        <div class="side-menu__name">Users</div>
+      </li>
+    </ul>
+  </div>
+  <div class="line"></div>
+
+  <div class="main-content__right">
+    <router-outlet />
+  </div>
+</div>
