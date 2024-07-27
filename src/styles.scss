@@ -86,7 +86,7 @@ body {
   padding: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-.task:hover{
+.task:hover {
   outline: 1.3px solid #2f4081;
 }
 
@@ -109,4 +109,16 @@ body {
   background-color: rgb(194, 194, 197);
   height: 40px;
   border: 1px dashed;
+}
+
+.custom-mat {
+  height: 500px;
+  width: 500px;
+  margin-top: 10px;
+  background-color: white !important;
+  font-size: 20px;
+  padding: 20px;
+  img {
+    width: 40px;
+  }
 }

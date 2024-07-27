@@ -71,7 +71,13 @@ export const mainContentRoutes: Routes = [
             path: 'edit/:id',
             component: CreateEditEpicComponent,
           },
+
         ],
+      },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./project-users/project-users.routes').then((m) => m.projectUsersRoutes),
       },
     ],
   },

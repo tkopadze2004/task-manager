@@ -34,7 +34,7 @@ export class BoardsComponent {
       width: 17,
       height: 370,
       backdrob: true,
-      backdropClass: 'overlay',
+      backdropClass: 'dark-overlay',
       closeOnBackdropClick: true,
       panelClass: ['create-item', 'board'],
     });

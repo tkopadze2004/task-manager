@@ -1,0 +1,59 @@
+<h1>Let's Create Task</h1>
+<form [formGroup]="taskForm">
+  <mat-form-field>
+    <mat-label>Task Name</mat-label>
+    <input type="text" matInput formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Task description</mat-label>
+    <textarea matInput formControlName="description" class="description">
+    </textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Issue Type</mat-label>
+    <mat-select formControlName="issueTypeId">
+      @for (issue of isues$ | async; track issue.id) {
+      <mat-option [value]="issue.id">
+        {{ issue.name }}
+      </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Epic Type</mat-label>
+    <mat-select formControlName="epicId">
+      @for (epic of epics$ | async; track epic.id) {
+      <mat-option [value]="epic.id">
+        {{ epic.name }}
+      </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Assign User</mat-label>
+    <mat-select formControlName="assigneeId">
+      @for (user of users$ | async; track user.id) {
+      <mat-option [value]="user.id">
+        {{ user.firstName }} {{ user.lastName }}
+      </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Reporter User</mat-label>
+    <mat-select formControlName="reporterId">
+      @for (user of users$ | async; track user.id) {
+      <mat-option [value]="user.id">
+        {{ user.firstName }} {{ user.lastName }}
+      </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</form>
+<button mat-raised-button color="primary" class="create" (click)="save()">
+  create
+</button>
+<div class="close" (click)="close()">
+  <img src="/images/close.svg" />
+</div>

@@ -3,7 +3,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { authGuard } from './core/guards/auth.guard';
 
-
 export const routes: Routes = [
   {
     path: '',
@@ -25,6 +24,11 @@ export const routes: Routes = [
           import('./pages/project/main-content/main-content-routes').then(
             (m) => m.mainContentRoutes
           ),
+      },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./pages/users/users.routes').then((m) => m.usersRoutes),
       },
     ],
   },

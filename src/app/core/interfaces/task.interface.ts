@@ -1,3 +1,4 @@
+import { TaskStatus } from '../enums/task-status';
 import { BoardColumn, Board } from './board';
 import { Epic } from './epic';
 import { IssueType } from './issue-type-interface';
@@ -32,4 +33,18 @@ export interface Task {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
+}
+export interface TaskPayload {
+  name: string;
+  description: string;
+  issueTypeId: number;
+  taskProperty: unknown;
+  epicId: number;
+  boardId: number;
+  boardColumnId: number;
+  isBacklog?: boolean;
+  priority?: string[];
+  taskStatus: TaskStatus;
+  assigneeId: number;
+  reporterId: number;
 }
