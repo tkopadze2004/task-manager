@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SideBarComponent} from './sidebar.component';
 
-describe('MainContentComponent', () => {
+describe('SideBarComponent', () => {
   let component: SideBarComponent;
   let fixture: ComponentFixture<SideBarComponent>;
 
