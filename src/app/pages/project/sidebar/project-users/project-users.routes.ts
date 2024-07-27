@@ -9,11 +9,7 @@ export const projectUsersRoutes: Routes = [
       {
         path: 'add',
         component: ProjectUsersComponent,
-      },
-      {
-        path: 'edit/:id',
-        component: ProjectUsersComponent,
-      },
+      }
     ],
   },
 ];

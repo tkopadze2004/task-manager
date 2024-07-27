@@ -11,12 +11,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
-import { IssueTypes } from '../../../core/enums/issue-type';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { IssueTypeFacade } from '../../../facade/issue-type.facade';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IssueTypeColumn } from '../../../core/interfaces/issue-type-interface';
-import { catchError, Subject, takeUntil, throwError } from 'rxjs';
+import {
+  catchError,
+  of,
+  Subject,
+  switchMap,
+  takeUntil,
+  throwError,
+} from 'rxjs';
+import { IssueTypeFacade } from '../../../../../facade/issue-type.facade';
+import { IssueTypes } from '../../../../../core/enums/issue-type';
+import { IssueTypeColumn } from '../../../../../core/interfaces/issue-type-interface';
 
 @Component({
   selector: 'app-create-edit-issue-type',
@@ -54,43 +61,49 @@ export class CreateEditIssueTypeComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    this.route.params.pipe(takeUntil(this.sub$)).subscribe((params) => {
-      if ('id' in params) {
-        this.id = +params['id'];
-        this.issueTypeFacade
-          .getIssueType( this.id)
-          .pipe(takeUntil(this.sub$))
-          .subscribe((issueType) => {
-            this.issueTypeForm.patchValue({
-              id: issueType.id,
-              name: issueType.name,
-              description: issueType.description,
-              icon: issueType.icon,
-              color: issueType.color,
-              isActive: issueType.isActive,
-              type: issueType.type,
-            });
-
-            const issueTypeColumnsFormArray = this.issueTypeForm.get(
-              'issueTypeColumns'
-            ) as FormArray;
-            issueTypeColumnsFormArray.controls = [];
-
-            issueType.issueTypeColumns.forEach((column) => {
-              issueTypeColumnsFormArray.push(
-                new FormGroup({
-                  name: new FormControl(column.name, Validators.required),
-                  filedName: new FormControl(
-                    column.filedName,
-                    Validators.required
-                  ),
-                  isRequired: new FormControl(column.isRequired),
-                })
-              );
-            });
+    this.route.params
+      .pipe(
+        switchMap((params) => {
+          if ('id' in params) {
+            this.id = +params['id'];
+            return this.issueTypeFacade.getIssueType(this.id);
+          } else {
+            return of(null);
+          }
+        }),
+        takeUntil(this.sub$)
+      )
+      .subscribe((issueType) => {
+        if (issueType) {
+          this.issueTypeForm.patchValue({
+            id: issueType.id,
+            name: issueType.name,
+            description: issueType.description,
+            icon: issueType.icon,
+            color: issueType.color,
+            isActive: issueType.isActive,
+            type: issueType.type,
           });
-      }
-    });
+
+          const issueTypeColumnsFormArray = this.issueTypeForm.get(
+            'issueTypeColumns'
+          ) as FormArray;
+          issueTypeColumnsFormArray.controls = [];
+
+          issueType.issueTypeColumns.forEach((column) => {
+            issueTypeColumnsFormArray.push(
+              new FormGroup({
+                name: new FormControl(column.name, Validators.required),
+                filedName: new FormControl(
+                  column.filedName,
+                  Validators.required
+                ),
+                isRequired: new FormControl(column.isRequired),
+              })
+            );
+          });
+        }
+      });
   }
 
   public get issueTypeColumns(): FormArray {
@@ -151,14 +164,12 @@ export class CreateEditIssueTypeComponent implements OnInit, OnDestroy {
         )
         .subscribe(() => {
           this.openSnackBar('Issue type updated successfully!', 'Close');
-          this.router.navigate([
-            '/home/mainContent/issue-types',
-          ]);
+          this.router.navigate(['/home/sideBar/issue-types']);
           this.issueTypeForm.reset();
         });
     } else {
       this.issueTypeFacade
-        .createIsuueType( payload)
+        .createIsuueType(payload)
         .pipe(
           catchError(({ error }) => {
             this.openSnackBar(error.message, 'Close');
@@ -168,9 +179,7 @@ export class CreateEditIssueTypeComponent implements OnInit, OnDestroy {
         )
         .subscribe(() => {
           this.openSnackBar('Issue type created successfully!', 'Close');
-          this.router.navigate([
-            '/home/mainContent/issue-types',
-          ]);
+          this.router.navigate(['/home/sideBar/issue-types']);
           this.issueTypeForm.reset();
         });
     }

@@ -76,9 +76,9 @@ export class CreateEditUserComponent {
           } else {
             return of(null);
           }
-        })
+        }),
+        takeUntil(this.sub$)
       )
-      .pipe(takeUntil(this.sub$))
       .subscribe((user) => {
         if (user) {
           this.userForm.patchValue({

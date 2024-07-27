@@ -12,8 +12,15 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Subject, takeUntil, throwError } from 'rxjs';
-import { EpicFacade } from '../../../facade/epic.facade';
+import {
+  catchError,
+  of,
+  Subject,
+  switchMap,
+  takeUntil,
+  throwError,
+} from 'rxjs';
+import { EpicFacade } from '../../../../../facade/epic.facade';
 
 @Component({
   selector: 'app-create-edit-epic',
@@ -45,21 +52,27 @@ export class CreateEditEpicComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    this.route.params.pipe(takeUntil(this.sub$)).subscribe((params) => {
-      if ('id' in params) {
-        this.id = +params['id'];
-        this.epicFacade
-          .getEpic(this.id)
-          .pipe(takeUntil(this.sub$))
-          .subscribe((epic) => {
-            this.epicForm.patchValue({
-              id: epic.id,
-              name: epic.name,
-              description: epic.description,
-            });
+    this.route.params
+      .pipe(
+        switchMap((params) => {
+          if ('id' in params) {
+            this.id = +params['id'];
+            return this.epicFacade.getEpic(this.id);
+          } else {
+            return of(null);
+          }
+        }),
+        takeUntil(this.sub$)
+      )
+      .subscribe((epic) => {
+        if (epic) {
+          this.epicForm.patchValue({
+            id: epic.id,
+            name: epic.name,
+            description: epic.description,
           });
-      }
-    });
+        }
+      });
   }
   onSubmit() {
     if (this.epicForm.invalid) {
@@ -89,7 +102,7 @@ export class CreateEditEpicComponent implements OnInit, OnDestroy {
         )
         .subscribe(() => {
           this.openSnackBar('Epic updated successfully!', 'Close');
-          this.router.navigate(['/home/mainContent/epics']);
+          this.router.navigate(['/home/sideBar/epics']);
           this.epicForm.reset();
         });
     } else {
@@ -104,7 +117,7 @@ export class CreateEditEpicComponent implements OnInit, OnDestroy {
         )
         .subscribe(() => {
           this.openSnackBar('Epic created successfully!', 'Close');
-          this.router.navigate(['/home/mainContent/epics']);
+          this.router.navigate(['/home/sideBar/epics']);
           this.epicForm.reset();
         });
     }

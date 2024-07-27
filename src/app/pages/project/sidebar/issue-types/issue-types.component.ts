@@ -6,21 +6,22 @@ import {
 } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import {  RouterLink } from '@angular/router';
-import {  tap } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { tap } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { HeadComponent } from '../../shared/head/head.component';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Epic } from '../../core/interfaces/epic';
-import { EpicFacade } from '../../facade/epic.facade';
+import { HeadComponent } from '../../../../shared/head/head.component';
+import { IssueType } from '../../../../core/interfaces/issue-type-interface';
+import { IssueTypeFacade } from '../../../../facade/issue-type.facade';
 @Component({
-  selector: 'app-epic',
+  selector: 'app-issue-types',
   standalone: true,
-  templateUrl: './epic.component.html',
-  styleUrl: './epic.component.scss',
+  templateUrl: './issue-types.component.html',
+  styleUrl: './issue-types.component.scss',
   imports: [
     MatTableModule,
     MatPaginatorModule,
@@ -35,31 +36,30 @@ import { EpicFacade } from '../../facade/epic.facade';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EpicComponent {
-  private epicFacade = inject(EpicFacade);
-  private epics!: Epic[];
+export class IssueTypesComponent {
+  private isueTypeFacade = inject(IssueTypeFacade);
+  private issues!: IssueType[];
   private snackBar = inject(MatSnackBar);
 
   public displayedColumns: string[] = ['id', 'name', 'createdAt', 'actions'];
-  public dataSource = new MatTableDataSource<Epic>();
+  public dataSource = new MatTableDataSource<IssueType>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  public epics$ = this.epicFacade.GetEpicss().pipe(
-
+  public issueTypes$ = this.isueTypeFacade.GetIssueTypes().pipe(
     tap((data) => {
-      this.epics = data;
-      this.dataSource = new MatTableDataSource(this.epics);
+      this.issues = data;
+      this.dataSource = new MatTableDataSource(this.issues);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
   );
 
   delete(boardId: number) {
-    this.epicFacade.deleteEpic(boardId).subscribe(() => {
-      this.openSnackBar('Epic deleted successfully!', 'Close');
-      this.epicFacade.GetEpicss();
+    this.isueTypeFacade.deleteIssueType(boardId).subscribe(() => {
+      this.openSnackBar('Issue Type deleted successfully!', 'Close');
+      this.isueTypeFacade.loadIssues();
     });
   }
   openSnackBar(message: string, action: string) {
