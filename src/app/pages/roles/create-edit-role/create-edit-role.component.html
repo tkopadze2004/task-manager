@@ -1,0 +1,23 @@
+<div class="form-container">
+  <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+    <h2>Create Role</h2>
+    <div class="role-container">
+      <mat-form-field class="role-container__input" appearance="outline">
+        <mat-label>Role Name</mat-label>
+        <input matInput type="text" id="name" formControlName="name" />
+        @if(roleForm.get('name')?.hasError('required')){
+        <mat-error> name is required </mat-error>
+        }
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="roleForm.invalid"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

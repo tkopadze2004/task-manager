@@ -1,10 +1,10 @@
 <div class="container">
   <div class="head">
     <app-head
-      name="Users"
-      button="Add User"
+      name="Roles"
+      button="Add Role"
       [showImg]="false"
-      [buttonRoute]="['/home/users', 'add']"
+      [buttonRoute]="['/home/roles', 'add']"
     />
   </div>
 
@@ -22,7 +22,7 @@
         <td mat-cell *matCellDef="let element">
           <button mat-button (click)="setPermissions()">Permissions</button>
 
-          <button mat-button [routerLink]="['/home/users', 'edit', element.id]">
+          <button mat-button [routerLink]="['/home/roles', 'edit', element.id]">
             Edit
           </button>
           <button mat-button (click)="delete(element.id)">Delete</button>
