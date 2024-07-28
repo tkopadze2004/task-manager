@@ -17,4 +17,11 @@ export class RoleService extends ApiService {
   createRole(RolePayload: RolePayload): Observable<Role> {
     return this.post<Role>('role', RolePayload);
   }
+  getRole(id: number): Observable<RolePayload> {
+    return this.get<RolePayload>(`role/${id}`);
+  }
+
+  editRole(id: number, RolePayload: RolePayload): Observable<Role> {
+    return this.put<Role>(`role/${id}`, RolePayload);
+  }
 }

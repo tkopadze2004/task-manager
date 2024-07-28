@@ -4,11 +4,15 @@ import { CreateEditRoleComponent } from './create-edit-role/create-edit-role.com
 
 export const rolesRoutes: Routes = [
   {
-    path:'',
-    component:RolesComponent
+    path: '',
+    component: RolesComponent,
   },
   {
-    path:'add',
-    component:CreateEditRoleComponent
-  }
+    path: 'add',
+    component: CreateEditRoleComponent,
+  },
+  {
+    path: 'edit/:id',
+    component: CreateEditRoleComponent,
+  },
 ];

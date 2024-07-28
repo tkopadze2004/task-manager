@@ -7,5 +7,6 @@ export interface  Role{
 }
 
 export interface  RolePayload{
+  id?:number
   name:string
 }
