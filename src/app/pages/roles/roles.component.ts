@@ -2,7 +2,6 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Role } from '../../core/interfaces/role.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ModalService } from '../../core/modal/modal.service';
 import { RoleService } from '../../service/role.service';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -36,7 +35,6 @@ export class RolesComponent {
   public dataSource = new MatTableDataSource<Role>();
   private snackBar = inject(MatSnackBar);
   public roles!: Role[];
-  private modalref = inject(ModalService);
   private readonly roleService = inject(RoleService);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -47,8 +45,6 @@ export class RolesComponent {
     tap((data: Role[]) => {
       this.roles = data;
       this.dataSource = new MatTableDataSource(this.roles);
-      console.log(this.roles);
-
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
