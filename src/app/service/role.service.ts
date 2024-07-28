@@ -10,4 +10,7 @@ export class RoleService extends ApiService {
   getRoles(): Observable<Role[]> {
     return this.get<Role[]>('role/all');
   }
+  deleteUser(roleId: number) {
+    return this.delete(`role/${roleId}`);
+  }
 }
