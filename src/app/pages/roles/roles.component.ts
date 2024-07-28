@@ -35,28 +35,28 @@ import { RouterLink } from '@angular/router';
 export class RolesComponent {
   public dataSource = new MatTableDataSource<Role>();
   private snackBar = inject(MatSnackBar);
-  public users!: Role[];
+  public roles!: Role[];
   private modalref = inject(ModalService);
-  private readonly userFacade = inject(RoleService);
+  private readonly roleService = inject(RoleService);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   public displayedColumns: string[] = ['name', 'createdAt', 'actions'];
 
-  public roles$ = this.userFacade.getRoles().pipe(
+  public roles$ = this.roleService.getRoles().pipe(
     tap((data: Role[]) => {
-      this.users = data;
-      this.dataSource = new MatTableDataSource(this.users);
-      console.log(this.users);
+      this.roles = data;
+      this.dataSource = new MatTableDataSource(this.roles);
+      console.log(this.roles);
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
   );
 
-  delete(userId: number) {
-    this.userFacade.deleteUser(userId).subscribe(() => {
-      this.openSnackBar(' User deleted successfully!', 'Close');
+  delete(roleId: number) {
+    this.roleService.deleteRole(roleId).subscribe(() => {
+      this.openSnackBar(' Role deleted successfully!', 'Close');
       // this.userFacade.loadUsers();
     });
   }

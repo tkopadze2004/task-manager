@@ -5,3 +5,7 @@ export interface  Role{
   type: string;
   permissions: string[];
 }
+
+export interface  RolePayload{
+  name:string
+}
