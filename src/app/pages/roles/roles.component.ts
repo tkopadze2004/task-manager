@@ -10,7 +10,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { HeadComponent } from '../../shared/head/head.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-roles',
@@ -32,10 +32,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './roles.component.scss',
 })
 export class RolesComponent {
+  private readonly roleService = inject(RoleService);
   public dataSource = new MatTableDataSource<Role>();
   private snackBar = inject(MatSnackBar);
-  public roles!: Role[];
-  private readonly roleService = inject(RoleService);
+  private roles!: Role[];
+  private router = inject(Router);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -53,22 +54,14 @@ export class RolesComponent {
   delete(roleId: number) {
     this.roleService.deleteRole(roleId).subscribe(() => {
       this.openSnackBar(' Role deleted successfully!', 'Close');
-      // this.userFacade.loadUsers();
+      // this.userFacade.loadRoles();
     });
   }
 
-  setPermissions() {}
-  // setRole(user: User) {
-  //   this.modalref.open(SetRoleComponent, {
-  //     data: { user: user },
-  //     width: 24,
-  //     height: 300,
-  //     backdrob: true,
-  //     backdropClass: 'dark-overlay',
-  //     closeOnBackdropClick: true,
-  //     panelClass: ['create-item', 'board'],
-  //   });
-  // }
+  setPermissions() {
+    this.router.navigate(['/home/roles/permissions']);
+  }
+
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 5000,

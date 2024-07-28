@@ -1,0 +1,4 @@
+@for (permission of (permissions$|async) || []; track permission) {
+
+<mat-checkbox>{{ permission.name }}</mat-checkbox>
+}

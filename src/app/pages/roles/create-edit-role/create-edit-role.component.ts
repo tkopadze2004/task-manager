@@ -91,7 +91,7 @@ export class CreateEditRoleComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.sub$))
         .subscribe(() => {
           this.openSnackBar(' Role created successfully!', 'Close');
-          this.router.navigate(['/home/roles']);
+          this.router.navigate(['/home/roles/permissions']);
         });
     }
   }
