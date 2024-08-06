@@ -1,0 +1,28 @@
+$role-color-primary: #3498db;
+
+.role-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  width: 350px;
+  &__input {
+    width: 100%;
+  }
+  button {
+    width: 100%;
+    border-radius: 4px;
+  }
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  h2 {
+    color: $role-color-primary;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+}
