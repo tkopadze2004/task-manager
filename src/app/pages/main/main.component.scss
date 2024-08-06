@@ -1,0 +1,160 @@
+:host {
+  font-family: system-ui;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.banner {
+  background: linear-gradient(
+    to right,
+    rgba(98, 149, 188, 0.91),
+    rgba(54, 124, 151, 0.8)
+  );
+  color: #fff;
+  text-align: center;
+  padding: 20px 0 25px;
+}
+
+.banner-content {
+  max-width: 960px;
+  margin: auto;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.banner h1 {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.banner p {
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.banner .btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 26px 13px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.banner .btn:hover {
+  background-color: #0056b3;
+}
+
+.about,
+.features,
+.cta {
+  padding: 32px 0;
+  text-align: center;
+}
+
+.about h2,
+.features h2,
+.cta h2 {
+  color: rgb(33, 49, 93);
+  font-family: system-ui;
+
+  margin-bottom: 16px;
+  font-size: 32px;
+}
+
+.about p,
+.cta p {
+  font-weight: 400;
+  text-shadow: black;
+  font-style: oblique;
+
+  font-size: 18px;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.feature-cards {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  background: #f4f4f4;
+  padding: 16px;
+  border-radius: 5px;
+  width: 320px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  text-align: left;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+.feature-card h3 {
+  color: #666;
+
+  font-size: 24px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.feature-card h3 i {
+  margin-right: 8px;
+}
+
+.cta .btn-signup {
+  background-color: #ff7f50;
+  color: #fff;
+  padding: 16px 32px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 20px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  display: inline-block;
+  margin-top: 16px;
+}
+
+.cta .btn-signup:hover {
+  background-color: #ff6347;
+  transform: scale(1.1);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .feature-cards {
+    flex-direction: column;
+  }
+
+  .feature-card {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .banner h1 {
+    font-size: 32px;
+  }
+
+  .banner p {
+    font-size: 16px;
+  }
+
+  .banner .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
