@@ -96,7 +96,7 @@ export class RegisterComponent implements OnDestroy {
         if (res) {
           this.successMessagge = 'you are registered';
           setTimeout(() => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/auth']);
           }, 2000);
         }
       });
