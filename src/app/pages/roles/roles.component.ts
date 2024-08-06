@@ -2,7 +2,6 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Role } from '../../core/interfaces/role.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RoleService } from '../../service/role.service';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { tap } from 'rxjs';
@@ -11,6 +10,7 @@ import { HeadComponent } from '../../shared/head/head.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Router, RouterLink } from '@angular/router';
+import { RoleFacade } from '../../facade/role.facade';
 
 @Component({
   selector: 'app-roles',
@@ -32,7 +32,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './roles.component.scss',
 })
 export class RolesComponent {
-  private readonly roleService = inject(RoleService);
+  private readonly roleFacade = inject(RoleFacade);
   public dataSource = new MatTableDataSource<Role>();
   private snackBar = inject(MatSnackBar);
   private roles!: Role[];
@@ -42,7 +42,7 @@ export class RolesComponent {
   @ViewChild(MatSort) sort!: MatSort;
   public displayedColumns: string[] = ['name', 'createdAt', 'actions'];
 
-  public roles$ = this.roleService.getRoles().pipe(
+  public roles$ = this.roleFacade.GetRoles().pipe(
     tap((data: Role[]) => {
       this.roles = data;
       this.dataSource = new MatTableDataSource(this.roles);
@@ -52,9 +52,9 @@ export class RolesComponent {
   );
 
   delete(roleId: number) {
-    this.roleService.deleteRole(roleId).subscribe(() => {
+    this.roleFacade.deleteRole(roleId).subscribe(() => {
       this.openSnackBar(' Role deleted successfully!', 'Close');
-      // this.userFacade.loadRoles();
+      this.roleFacade.loadRoles();
     });
   }
 

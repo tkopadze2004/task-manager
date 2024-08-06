@@ -8,8 +8,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Role, RolePayload } from '../../../core/interfaces/role.interface';
-import { RoleService } from '../../../service/role.service';
+import { RolePayload } from '../../../core/interfaces/role.interface';
 import {
   catchError,
   of,
@@ -20,6 +19,7 @@ import {
 } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RoleFacade } from '../../../facade/role.facade';
 
 @Component({
   selector: 'app-create-edit-role',
@@ -34,7 +34,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './create-edit-role.component.scss',
 })
 export class CreateEditRoleComponent implements OnInit, OnDestroy {
-  private readonly roleService = inject(RoleService);
+  private readonly roleFacade = inject(RoleFacade);
   private sub$ = new Subject();
   private snackBar = inject(MatSnackBar);
   private router = inject(Router);
@@ -52,7 +52,7 @@ export class CreateEditRoleComponent implements OnInit, OnDestroy {
         switchMap((params) => {
           if ('id' in params) {
             this.id = params['id'];
-            return this.roleService.getRole(this.id);
+            return this.roleFacade.getRole(this.id);
           } else {
             return of(null);
           }
@@ -72,7 +72,7 @@ export class CreateEditRoleComponent implements OnInit, OnDestroy {
   onSubmit() {
     const payload = this.roleForm.value as RolePayload as { name: string };
     if (this.id) {
-      this.roleService
+      this.roleFacade
         .editRole(this.id, payload)
         .pipe(
           catchError(({ error }) => {
@@ -86,12 +86,14 @@ export class CreateEditRoleComponent implements OnInit, OnDestroy {
           this.router.navigate(['/home/roles']);
         });
     } else {
-      this.roleService
+      this.roleFacade
         .createRole(payload)
         .pipe(takeUntil(this.sub$))
         .subscribe(() => {
           this.openSnackBar(' Role created successfully!', 'Close');
-          this.router.navigate(['/home/roles/permissions']);
+          // this.router.navigate(['/home/roles/permissions']);
+          this.router.navigate(['/home/roles']);
+
         });
     }
   }
