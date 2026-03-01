@@ -1,160 +1,224 @@
 :host {
-  font-family: system-ui;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: block;
   overflow-x: hidden;
 }
 
+.section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+// ── Banner ──────────────────────────────────────────────────────────────────
+
 .banner {
-  background: linear-gradient(
-    to right,
-    rgba(98, 149, 188, 0.91),
-    rgba(54, 124, 151, 0.8)
-  );
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d6a8f 60%, #3a8fb5 100%);
   color: #fff;
   text-align: center;
-  padding: 20px 0 25px;
+  padding: 100px 24px 80px;
 }
 
 .banner-content {
-  max-width: 960px;
-  margin: auto;
-  animation: fadeIn 2s ease-in-out;
+  max-width: 680px;
+  margin: 0 auto;
+  animation: fadeIn 0.9s ease-out both;
+}
+
+.banner-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 20px;
 }
 
 .banner h1 {
-  font-size: 40px;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   margin-bottom: 16px;
 }
 
 .banner p {
-  font-size: 20px;
-  margin-bottom: 25px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 32px;
 }
 
 .banner .btn {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 26px 13px;
+  background-color: #fff;
+  color: #1e3a5f;
+  padding: 13px 30px;
   text-decoration: none;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: background-color 0.3s ease-in-out;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-block;
+  transition: background-color 0.2s, transform 0.2s;
+
+  &:hover {
+    background-color: #e8f0fe;
+    transform: translateY(-2px);
+  }
 }
 
-.banner .btn:hover {
-  background-color: #0056b3;
-}
+// ── About ─────────────────────────────────────────────────────────────────────
 
-.about,
-.features,
-.cta {
-  padding: 32px 0;
+.about {
+  padding: 72px 0;
   text-align: center;
+  background: #fff;
+
+  h2 {
+    color: #1e3a5f;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #4a5568;
+    max-width: 560px;
+    margin: 0 auto;
+  }
 }
 
-.about h2,
-.features h2,
-.cta h2 {
-  color: rgb(33, 49, 93);
-  font-family: system-ui;
+// ── Features ──────────────────────────────────────────────────────────────────
 
-  margin-bottom: 16px;
-  font-size: 32px;
-}
+.features {
+  padding: 72px 0;
+  text-align: center;
+  background: #f7f9fc;
 
-.about p,
-.cta p {
-  font-weight: 400;
-  text-shadow: black;
-  font-style: oblique;
-
-  font-size: 18px;
-  margin: 0 auto;
-  max-width: 900px;
+  h2 {
+    color: #1e3a5f;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    letter-spacing: -0.01em;
+  }
 }
 
 .feature-cards {
   display: flex;
   justify-content: center;
-  gap: 32px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
 .feature-card {
-  background: #f4f4f4;
-  padding: 16px;
-  border-radius: 5px;
-  width: 320px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  background: #fff;
+  padding: 28px 24px;
+  border-radius: 12px;
+  width: 260px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8edf3;
   text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  &__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #e8f0fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 18px;
+    color: #2d6a8f;
+  }
+
+  h3 {
+    color: #1e3a5f;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: #4a5568;
+    font-size: 14px;
+    line-height: 1.6;
+  }
 }
 
-.feature-card:hover {
-  transform: scale(1.05);
+// ── CTA ───────────────────────────────────────────────────────────────────────
+
+.cta {
+  padding: 72px 0;
+  text-align: center;
+  background: #fff;
+
+  h2 {
+    color: #1e3a5f;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-signup {
+    background-color: #2d6a8f;
+    color: #fff;
+    padding: 13px 32px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-block;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover {
+      background-color: #1e3a5f;
+      transform: translateY(-2px);
+    }
+  }
 }
 
-.feature-card h3 {
-  color: #666;
-
-  font-size: 24px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-}
-
-.feature-card h3 i {
-  margin-right: 8px;
-}
-
-.cta .btn-signup {
-  background-color: #ff7f50;
-  color: #fff;
-  padding: 16px 32px;
-  text-decoration: none;
-  border-radius: 8px;
-  font-size: 20px;
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-  display: inline-block;
-  margin-top: 16px;
-}
-
-.cta .btn-signup:hover {
-  background-color: #ff6347;
-  transform: scale(1.1);
-}
+// ── Animation ─────────────────────────────────────────────────────────────────
 
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+// ── Responsive ────────────────────────────────────────────────────────────────
+
 @media (max-width: 768px) {
+  .banner {
+    padding: 64px 24px 56px;
+  }
+
   .feature-cards {
     flex-direction: column;
+    align-items: center;
   }
 
   .feature-card {
-    width: 80%;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 360px;
   }
 
-  .banner h1 {
-    font-size: 32px;
-  }
-
-  .banner p {
-    font-size: 16px;
-  }
-
-  .banner .btn {
-    padding: 8px 16px;
-    font-size: 14px;
+  .about,
+  .features,
+  .cta {
+    padding: 48px 0;
   }
 }

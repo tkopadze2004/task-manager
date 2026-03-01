@@ -2,15 +2,14 @@
   display: flex;
   justify-content: space-around;
   border-bottom: 1px solid #051e4937;
-  width: 900px;
+  width: 1000px;
 
   &__left {
     display: flex;
-    &--name {
-      font-size: 26px;
-      color: rgba(42, 41, 41, 0.838);
-      font-weight: 500;
-      margin: 5px 0 0 10px;
+    flex-direction: column;
+    &--top {
+      display: flex;
+      align-items: center;
     }
     &--icon {
       width: 60px;
@@ -22,11 +21,17 @@
       font-size: 40px;
       font-weight: 500;
       color: #ffffff;
-      margin-right: 5px;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    &--name {
+      font-size: 26px;
+      color: rgba(42, 41, 41, 0.838);
+      font-weight: 500;
     }
     &--description {
-      margin: 6px 0 28px;
-      font-size: 13px;
+      margin: 20px 0 12px;
+      font-size: 14px;
     }
   }
   &__right {
